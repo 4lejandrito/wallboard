@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Wallboard</title>
+		<meta name="author" content="gyurisc">
+		<link rel="stylesheet" type="text/css" href="bower_components/gridster/dist/jquery.gridster.css">
+		<link rel="stylesheet" type="text/css" href="assets/css/styles.css">
+	</head>
+	<body ng-app="wb">		
+        
+        <div class="gridster" ng-controller="wb">
+            <ul ng-show="loaded">
+                <li ng-controller="widget" ng-repeat="widget in widgets" data-row="1" data-col="1" data-sizex="{{widget.w}}" data-sizey="{{widget.h}}">
+                    <div class="wb-widget" ng-include="'widgets/' + widget.name + '/index.html'"></div>
+                </li>
+            </ul>
+            <div class="wb-loading" ng-show="!loaded">Loading Wallboard...</div>
+        </div>
+        <footer>Wallboard</footer>		
+        
+        <script type="text/javascript" src="bower_components/angular/angular.min.js"></script>        
+		<script type="text/javascript" src="bower_components/jquery/dist/jquery.js"></script>
+		<script type="text/javascript" src="bower_components/gridster/dist/jquery.gridster.with-extras.js" charster="utf-8"></script>
+		<script type="text/javascript">
+            angular.module('wb', [])
+            .controller('wb', function($scope, $timeout) {
+                $scope.widgets = [{name: 'builds', w: 4, h: 2}, {name: 'builds', w: 2, h: 2}];
+                
+                $timeout(function() {    
+                    $(".gridster > ul").gridster({
+                        widget_margins: [20, 20], 
+                        widget_base_dimensions: [70, 70],					
+                        resize: {
+                            enabled: true
+                        }
+                    }).data('gridster');  
+                    $scope.loaded = true;
+                }, 0);
+            }).controller('widget', function($scope, $http) {
+                $scope.get = function(url, data) {
+                    return $http.get('widgets/' + $scope.widget.name + '/' + url, data);
+                }
+            });            
+		</script>
+        
+        <script type="text/javascript" src="widgets/builds/widget.js"></script>
+        
+	</body>
+</html>

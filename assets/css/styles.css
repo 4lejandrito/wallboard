@@ -1,0 +1,78 @@
+@import url(http://fonts.googleapis.com/css?family=Lobster);
+@import url(http://fonts.googleapis.com/css?family=Open+Sans);
+
+body {
+    padding: 0;
+    margin: 0;
+    background: #004756;    
+    -webkit-font-smoothing: antialiased;
+    font-family: 'Open Sans', sans-serif;
+    font-size: x-small;
+    color: #666666;
+}
+
+ul, ol {
+    list-style: none;
+}
+
+/* Gridster styles */
+[ng-app]:hover .gridster {
+    opacity: 1;
+}
+
+.gridster * {
+    margin: 0;
+    padding: 0;
+}
+
+.gridster {
+    position: static;
+    margin: 0 auto;
+
+    opacity: .8;
+
+    -webkit-transition: opacity .6s;
+    -moz-transition: opacity .6s;
+    -o-transition: opacity .6s;
+    -ms-transition: opacity .6s;
+    transition: opacity .6s;
+}
+
+.gridster li {
+    background: #FFF;
+    cursor: pointer;
+    -webkit-box-shadow: 0 0 5px rgba(0,0,0,0.3);
+    box-shadow: 0 0 5px rgba(0,0,0,0.3);
+    padding: 10px;
+}
+
+.wb-widget {
+    height: 100%;
+    overflow: auto;
+}
+
+.wb-loading {
+    text-align: center;
+    margin-top: 100px;
+    position: absolute;
+    width: 100%;
+    font-size: 4rem;
+}
+
+.wb-w-loading {
+    text-align: center;
+    top: 30%;
+    position: absolute;
+    width: 100%;
+    font-size: 2rem;
+}
+
+footer {    
+    position: absolute;
+    bottom: 0;
+    text-align: center;
+    padding: 10px 0;
+    width: 100%;    
+    font-size: 1rem;
+    opacity: .4;
+}

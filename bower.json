@@ -1,0 +1,26 @@
+{
+  "name": "wb",
+  "version": "0.0.1",
+  "authors": [
+    "Alejandro Tardín <alejandro@tardin.com>"
+  ],
+  "description": "Wallboard",
+  "keywords": [
+    "Wallboard",
+    "dev"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.2.20",
+    "gridster": "~0.5.4",
+    "jquery": "~2.1.1"
+  }
+}

@@ -1,0 +1,4 @@
+<div ng-controller="builds">
+    <div class="wb-w-loading" ng-show="!jobs">Loading...</div>
+    <div ng-show="jobs" ng-repeat="job in jobs">{{job.id}}</div>
+</div>
