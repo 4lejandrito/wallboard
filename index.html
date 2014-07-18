@@ -2,7 +2,9 @@
 <html>
 	<head>
 		<title>Wallboard</title>
-		<meta name="author" content="gyurisc">
+		
+        <link href="/bower_components/foundation/css/normalize.css" rel="stylesheet">
+        <link href="/bower_components/foundation/css/foundation.css" rel="stylesheet">
 		<link rel="stylesheet" type="text/css" href="bower_components/gridster/dist/jquery.gridster.css">
 		<link rel="stylesheet" type="text/css" href="assets/css/styles.css">
 	</head>
@@ -24,12 +26,12 @@
 		<script type="text/javascript">
             angular.module('wb', [])
             .controller('wb', function($scope, $timeout) {
-                $scope.widgets = [{name: 'builds', w: 4, h: 2}, {name: 'builds', w: 2, h: 2}];
+                $scope.widgets = [{name: 'builds', w: 10, h: 2}, {name: 'heroes', w: 2, h: 4}];
                 
                 $timeout(function() {    
                     $(".gridster > ul").gridster({
                         widget_margins: [20, 20], 
-                        widget_base_dimensions: [70, 70],					
+                        widget_base_dimensions: [30, 30],					
                         resize: {
                             enabled: true
                         }
@@ -44,6 +46,7 @@
 		</script>
         
         <script type="text/javascript" src="widgets/builds/widget.js"></script>
+        <script type="text/javascript" src="widgets/heroes/widget.js"></script>
         
 	</body>
 </html>

@@ -1,4 +1,16 @@
 <div ng-controller="builds">
     <div class="wb-w-loading" ng-show="!jobs">Loading...</div>
-    <div ng-show="jobs" ng-repeat="job in jobs">{{job.id}}</div>
+    <ul class="small-block-grid-{{Math.min(6, jobs.length)}}">
+        <li class="job" ng-show="jobs" ng-repeat="job in jobs|limitTo:11">
+            <div class="alert-box success">
+                <h4>{{job.name}}</h4>
+
+                {{job.commit}}
+            </div>
+        </li>
+        <li class="job" ng-show="jobs.length > 11">
+            <div class="alert-box success"><h1>+{{jobs.length - 11}}</h1></div>
+        </li>
+    </ul>
+    <button ng-click="addBuild()">Add build</button>
 </div>

@@ -38,7 +38,7 @@ ul, ol {
     transition: opacity .6s;
 }
 
-.gridster li {
+.gridster > ul > li {
     background: #FFF;
     cursor: pointer;
     -webkit-box-shadow: 0 0 5px rgba(0,0,0,0.3);
@@ -75,4 +75,35 @@ footer {
     width: 100%;    
     font-size: 1rem;
     opacity: .4;
+}
+
+.job {
+    padding: 10px;
+}
+
+.job * {
+    color: white !important;
+}
+
+.job div {
+    min-height: 150px;
+    padding: 10px;
+}
+
+.job h4 {
+    margin-bottom: 10px;
+}
+
+table {
+    width: 100%;
+    border: none;
+}
+
+table tr:nth-of-type(even) {
+    background-color: transparent !important;
+}
+
+.gridster table img {
+    width: 24px;
+    margin: 10px;
 }
