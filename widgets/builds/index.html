@@ -2,9 +2,15 @@
     <div class="wb-w-loading" ng-show="!jobs">Loading...</div>
     <ul class="small-block-grid-{{Math.min(6, jobs.length)}}">
         <li class="job" ng-show="jobs" ng-repeat="job in jobs|limitTo:11">
-            <div class="alert-box success">
+            <div class="alert-box radius success">
                 <h4>{{job.name}}</h4>
 
+                <div class="authors">
+                    <a class="th"><img src="https://avatars1.githubusercontent.com/u/1937354?s=460"></a>
+                    <a class="th"><img src="https://avatars1.githubusercontent.com/u/1937354?s=460"></a>
+                    <a class="th"><img src="https://avatars1.githubusercontent.com/u/1937354?s=460"></a>
+                </div>
+                
                 {{job.commit}}
             </div>
         </li>

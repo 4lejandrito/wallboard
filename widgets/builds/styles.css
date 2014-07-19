@@ -1,0 +1,29 @@
+.job {
+    padding: 10px;
+}
+
+.job * {
+    color: white !important;
+}
+
+.job > div {
+    height: 160px;
+    padding: 10px;
+}
+
+.job h4 {
+    margin-bottom: 10px;
+}
+
+.job .th {
+    margin: 0;
+    border-width: 2px;
+}
+
+.job img {
+    width: 24px;
+}
+
+.job .authors {
+    margin: 20px;
+}

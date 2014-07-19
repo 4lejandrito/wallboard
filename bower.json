@@ -21,6 +21,7 @@
   "dependencies": {
     "angular": "~1.2.20",
     "gridster": "~0.5.4",
-    "jquery": "~2.1.1"
+    "jquery": "~2.1.1",
+    "foundation": "~5.3.1"
   }
 }
