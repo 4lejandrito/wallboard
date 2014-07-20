@@ -23,11 +23,13 @@ angular.module('wb', ['ui.gravatar'])
         return $http.get('widgets/' + $scope.widget.name + '/' + url, data);
     }
     
-    var child = $injector.get($scope.widget.name);
-    if (child && child.start && $scope.widget.config) {
-        $scope.$emit('loading', true);    
-        child.start($scope, function() {
-            $scope.$emit('loading', false);    
-        });
-    }
+    try {
+        var child = $injector.get($scope.widget.name);
+        if (child.start && $scope.widget.config) {
+            $scope.$emit('loading', true);    
+            child.start($scope, function() {
+                $scope.$emit('loading', false);    
+            });
+        }
+    } catch(err) {}
 });       
