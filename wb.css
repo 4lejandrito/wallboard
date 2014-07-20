@@ -4,7 +4,7 @@
 body {
     padding: 0;
     margin: 0;
-    background: #004756;    
+    background: #1b1b24;
     -webkit-font-smoothing: antialiased;
     font-family: 'Open Sans', sans-serif;
     font-size: x-small;
@@ -46,9 +46,13 @@ ul, ol {
 
 .wb-w-loading {
     text-align: center;
-    top: 30%;
-    position: absolute;
-    width: 100%;
+    margin-top: 10%;
+    font-size: 4rem;
+}
+
+.wb-w-settings {
+    text-align: center;
+    margin-top: 10%;
     font-size: 2rem;
 }
 
@@ -57,7 +61,11 @@ footer {
     bottom: 0;
     text-align: center;
     padding: 10px 0;
-    width: 100%;    
-    font-size: 1rem;
-    opacity: .4;
+    width: 100%;            
+    opacity: .5;
 }
+
+footer h3 {
+    color: white;
+}
+    

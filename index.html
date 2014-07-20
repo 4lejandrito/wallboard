@@ -3,10 +3,11 @@
 	<head>
 		<title>Wallboard</title>
 		
-        <link href="/bower_components/foundation/css/normalize.css" rel="stylesheet">
-        <link href="/bower_components/foundation/css/foundation.css" rel="stylesheet">
-		<link rel="stylesheet" type="text/css" href="bower_components/gridster/dist/jquery.gridster.css">
-		<link rel="stylesheet" type="text/css" href="wb.css">
+        <link rel="stylesheet" href="/bower_components/foundation/css/normalize.css">
+        <link rel="stylesheet" href="/bower_components/foundation/css/foundation.css">
+		<link rel="stylesheet" href="bower_components/gridster/dist/jquery.gridster.css">
+        <link rel="stylesheet" href="bower_components/fontawesome/css/font-awesome.min.css">
+		<link rel="stylesheet" href="wb.css">
 	</head>
 	<body ng-app="wb">		
         
@@ -14,12 +15,16 @@
             <ul ng-show="loaded">
                 <li ng-controller="widget" ng-repeat="widget in widgets" data-row="1" data-col="1" data-sizex="{{widget.w}}" data-sizey="{{widget.h}}">
                     <link rel="stylesheet" type="text/css" ng-href="widgets/{{widget.name}}/styles.css">
-                    <div class="wb-widget wb-widget-{{widget.name}}" ng-include="'widgets/' + widget.name + '/index.html'"></div>
+                    <div class="wb-w-loading" ng-show="loading"><i class="fa fa-spin fa-circle-o-notch"></i></div>
+                    <div ng-show="!loading && widget.config" class="wb-widget wb-widget-{{widget.name}}" ng-include="'widgets/' + widget.name + '/index.html'"></div>
+                    <div class="wb-w-settings" ng-show="!widget.config">
+                        <strong>{{widget.name}}</strong> widget!<br><a href="settings"><i class="fa fa-cog"></i> Set up</a>
+                    </div>
                 </li>
             </ul>
-            <div class="wb-loading" ng-show="!loaded">Loading Wallboard...</div>
+            <div class="wb-loading" ng-show="!loaded"><i class="fa fa-spin fa-circle-o-notch"></i></div>
         </div>
-        <footer>Wallboard</footer>
+        <footer><h3><i class="fa fa-th"> </i> Wallboard</h3></footer>
         
         <script type="text/javascript" src="bower_components/angular/angular.min.js"></script>  
         <script type="text/javascript" src="bower_components/angular-gravatar/build/md5.js"></script>

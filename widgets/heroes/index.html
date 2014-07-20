@@ -1,11 +1,8 @@
-<div ng-controller="heroes">
-    <header class="alert-box radius info"><strong>Commit heroes</strong></header>
-    <div class="wb-w-loading" ng-show="!heroes">Loading...</div>    
-    <table>
-        <tr ng-show="heroes" ng-repeat="hero in heroes">
-            <td><a class="th"><img src="https://avatars1.githubusercontent.com/u/1937354?s=460"></a></td>
-            <td>{{hero.name}}</td>
-            <td><strong>{{hero.commits}}</strong></td>
-        </tr>
-    </table>
-</div>
+<header class="alert-box radius info"><strong>Commit heroes</strong></header>
+<table>
+    <tr ng-show="heroes" ng-repeat="hero in heroes">
+        <td><a class="th"><img src="https://avatars1.githubusercontent.com/u/1937354?s=460"></a></td>
+        <td>{{hero.name}}</td>
+        <td><strong>{{hero.commits}}</strong></td>
+    </tr>
+</table>
