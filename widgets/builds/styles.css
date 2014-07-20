@@ -1,37 +1,51 @@
-.job {
-    padding: 10px;
+.wb-widget-builds > div {    
+    height: 100%;
 }
 
 .wb-widget-builds ul {
     margin: 0 !important;
+    height: 100%;
 }
 
-.job * {
+.wb-widget-builds .job {
+    padding: 10px;
+    height: 50%;
+}
+
+.wb-widget-builds .job * {
     color: white !important;
 }
 
-.job > div {
-    min-height: 160px;
+.wb-widget-builds .job > div {    
     padding: 10px;
     margin: 0;
+    height: 100%;
 }
 
-.job h4 {
+.wb-widget-builds .job h4 {
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: auto;
     margin-bottom: 10px;    
 }
 
-.job .th {
+.wb-widget-builds .job h5 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;    
+   -webkit-line-clamp: 2;
+   -webkit-box-orient: vertical;
+}
+
+.wb-widget-builds .job .th {
     margin-right: 5px;
     border-width: 2px;
 }
 
-.job img {
+.wb-widget-builds .job img {
     width: 24px;
 }
 
-.job .authors {
+.wb-widget-builds .job .authors {
     margin-bottom: 10px;    
 }
