@@ -26,7 +26,7 @@ ul, ol {
 }
 
 .gridster > ul > li {
-    background: #FFF;
+    background-color: rgba(255,255,255, .9);
     cursor: pointer;    
     padding: 10px;
 }
@@ -67,5 +67,9 @@ footer {
 
 footer h3 {
     color: white;
+}
+
+table {
+    background: none;
 }
     
