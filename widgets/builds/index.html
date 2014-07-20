@@ -1,21 +1,19 @@
-<div ng-controller="builds">
+<div ng-click="addBuild()" ng-controller="builds">
     <div class="wb-w-loading" ng-show="!jobs">Loading...</div>
     <ul class="small-block-grid-{{Math.min(6, jobs.length)}}">
-        <li ng-click="addBuild()" class="job" ng-show="jobs" ng-repeat="job in jobs|limitTo:11">
-            <div class="alert-box radius success">
+        <li class="job" ng-show="jobs" ng-repeat="job in (ojobs = (jobs|orderBy:'status':true)|limitTo:11)">
+            <div class="alert-box radius {{['success', 'warning', 'alert'][job.status]}}">
                 <h4>{{job.name}}</h4>
 
                 <div class="authors">
-                    <a class="th"><img src="https://avatars1.githubusercontent.com/u/1937354?s=460"></a>
-                    <a class="th"><img src="https://avatars1.githubusercontent.com/u/1937354?s=460"></a>
-                    <a class="th"><img src="https://avatars1.githubusercontent.com/u/1937354?s=460"></a>
+                    <a class="th" ng-repeat="author in job.authors"><img title="{{author.name}}" gravatar-src="author.email" gravatar-size="100"></a>
                 </div>
                 
-                <h6>{{job.commit}}</h6>
+                <h5>{{job.commit}}</h5>
             </div>
         </li>
         <li class="job" ng-show="jobs.length > 11">
-            <div class="alert-box radius success"><h1>+{{jobs.length - 11}}</h1></div>
+            <div class="alert-box radius {{['success', 'warning', 'alert'][ojobs[11].status]}}"><h1>+{{jobs.length - 11}}</h1></div>
         </li>
     </ul>    
 </div>

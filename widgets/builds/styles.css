@@ -23,12 +23,8 @@
     margin-bottom: 10px;    
 }
 
-.job h6 {
-    font-size: 16px;
-}
-
 .job .th {
-    margin: 0;
+    margin-right: 5px;
     border-width: 2px;
 }
 

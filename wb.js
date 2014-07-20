@@ -1,7 +1,7 @@
-angular.module('wb', [])
+angular.module('wb', ['ui.gravatar'])
 
 .controller('wb', function($scope, $timeout) {
-    $scope.widgets = [{name: 'builds', w: 19, h: 5}, {name: 'heroes', w: 8, h: 5}];
+    $scope.widgets = [{name: 'builds', w: 19, h: 8}, {name: 'heroes', w: 8, h: 5}];
 
     $timeout(function() {    
         $(".gridster > ul").gridster({
