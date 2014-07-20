@@ -2,17 +2,29 @@
     padding: 10px;
 }
 
+.wb-widget-builds ul {
+    margin: 0 !important;
+}
+
 .job * {
     color: white !important;
 }
 
 .job > div {
-    height: 160px;
+    min-height: 160px;
     padding: 10px;
+    margin: 0;
 }
 
 .job h4 {
-    margin-bottom: 10px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: auto;
+    margin-bottom: 10px;    
+}
+
+.job h6 {
+    font-size: 16px;
 }
 
 .job .th {
@@ -25,5 +37,5 @@
 }
 
 .job .authors {
-    margin: 20px;
+    margin-bottom: 10px;    
 }
