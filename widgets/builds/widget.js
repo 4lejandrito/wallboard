@@ -22,7 +22,7 @@ angular.module('wb').service('builds', function($http) {
                 }}).success(function(data) {
                     $scope.jobs.push({
                         name: repo.slug.split('/')[1],
-                        status: {passed: 0, errored: 1, failed: 2}[data.build.state],                
+                        status: {passed: 0, errored: 1, failed: 2, started: 3}[data.build.state],                
                         commit: data.commit.message,
                         authors: [
                             {name: data.commit.author_name, email: data.commit.author_email}                        
