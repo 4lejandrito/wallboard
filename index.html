@@ -15,14 +15,20 @@
             <ul ng-show="loaded">
                 <li ng-controller="widget" ng-repeat="widget in widgets" data-row="1" data-col="1" data-sizex="{{widget.w}}" data-sizey="{{widget.h}}">
                     <link rel="stylesheet" type="text/css" ng-href="widgets/{{widget.name}}/styles.css">
-                    <div class="wb-w-loading" ng-show="loading"><i class="fa fa-spin fa-circle-o-notch"></i></div>
+                    <div class="wb-w-loading" ng-show="loading">
+                        <div>Loading <strong>{{widget.name}}</strong></div>
+                        <i class="fa fa-spin fa-circle-o-notch"></i>
+                    </div>
                     <div ng-show="!loading && widget.config" class="wb-widget wb-widget-{{widget.name}}" ng-include="'widgets/' + widget.name + '/index.html'"></div>
                     <div class="wb-w-settings" ng-show="!widget.config">
                         <strong>{{widget.name}}</strong> widget!<br><a href="settings"><i class="fa fa-cog"></i> Set up</a>
                     </div>
                 </li>
             </ul>
-            <div class="wb-loading" ng-show="!loaded"><i class="fa fa-spin fa-circle-o-notch"></i></div>
+            <div class="wb-loading" ng-show="!loaded">
+                <div>Loading <strong>Wallboard</strong></div><br>
+                <i class="fa fa-spin fa-circle-o-notch"></i>
+            </div>
         </div>
         <footer><h3><i class="fa fa-th"> </i> Wallboard</h3></footer>
         

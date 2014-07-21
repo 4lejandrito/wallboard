@@ -16,7 +16,8 @@
     color: white !important;
 }
 
-.wb-widget-builds .job > div {    
+.wb-widget-builds .job > div {  
+    overflow: hidden;
     padding: 10px;
     margin: 0;
     height: 100%;
