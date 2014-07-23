@@ -13,14 +13,14 @@ angular.module('wb', ['ui.gravatar'])
             autogrow_cols: false
         }).data('gridster');  
         $scope.loaded = true;
-    }, 1000);
+    }, 500);
 }).controller('widget', function($scope, $http, $injector) {        
     $scope.$on('loading', function(e, loading) {
         $scope.loading = loading;
     });
     
     $scope.get = function(url, data) {
-        return $http.get('widgets/' + $scope.widget.name + '/' + url, data);
+        return $http.get('http://localhost:9292/' + $scope.widget.name + (url ? '/' + url : ''), data);
     }
     
     try {

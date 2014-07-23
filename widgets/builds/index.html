@@ -1,6 +1,6 @@
 <ul ng-click="addBuild()" class="small-block-grid-{{Math.min(6, jobs.length)}}">
     <li class="job" ng-show="jobs" ng-repeat="job in (ojobs = (jobs|orderBy:'status':true)|limitTo:11)">
-        <div class="alert-box radius {{['success', 'warning', 'alert', 'info blink'][job.status]}}">
+        <div class="alert-box radius {{['success', 'warning', 'alert'][job.status]}}">
             <h4>{{job.name}}</h4>
 
             <div class="authors">

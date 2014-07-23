@@ -16,6 +16,7 @@
                 <li ng-controller="widget" ng-repeat="widget in widgets" data-row="1" data-col="1" data-sizex="{{widget.w}}" data-sizey="{{widget.h}}">
                     <link rel="stylesheet" type="text/css" ng-href="widgets/{{widget.name}}/styles.css">
                     <div class="wb-w-loading" ng-show="loading">
+                        <h1><i class="fa fa-th"></i></h1>
                         <div>Loading <strong>{{widget.name}}</strong></div>
                         <i class="fa fa-spin fa-circle-o-notch"></i>
                     </div>
@@ -26,7 +27,8 @@
                 </li>
             </ul>
             <div class="wb-loading" ng-show="!loaded">
-                <div>Loading <strong>Wallboard</strong></div><br>
+                <i class="fa fa-th"></i>
+                <div>Loading <strong>Wallboard</strong></div>
                 <i class="fa fa-spin fa-circle-o-notch"></i>
             </div>
         </div>

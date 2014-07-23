@@ -42,18 +42,23 @@ ul, ol {
     position: absolute;
     width: 100%;
     font-size: 4rem;
+    color: #666666;
 }
 
-.wb-w-loading {
+.wb-loading div {    
+    margin-top: 2.5rem;
+    margin-bottom: 3rem;
+}
+
+.wb-w-loading, .wb-w-settings{    
     text-align: center;
-    margin-top: 10%;
+    margin-top: 8%;
     font-size: 2rem;
 }
 
-.wb-w-settings {
-    text-align: center;
-    margin-top: 10%;
-    font-size: 2rem;
+.wb-w-loading h1 {
+    color: #666666;
+    margin: 0;
 }
 
 footer {    
