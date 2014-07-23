@@ -6,14 +6,28 @@ import tornado.websocket
 import sys
 from plugins import *
 
-def pluginSub():
-    print Plugin.__subclasses__()
+class WSHandler(tornado.websocket.WebSocketHandler):
     
+    def check_origin(self, origin):
+        return True
+    
+    def open(self, plugin):
+        plugins = __import__('plugins')
+        self.plugin = getattr(plugins, plugin)()
+        self.plugin.start()
+      
+    def on_message(self, message):
+        getattr(self.plugin, message)()
+ 
+    def on_close(self):
+        self.plugin.close()
+    
+    def emitMessage(self, message):
+        self.plugin.write(message)
+
 if __name__ == "__main__":
-    handArr = []
-    for cl in Plugin.__subclasses__() :
-        handArr.append((r'/'+cl.__name__,cl))
-    application = tornado.web.Application(handArr, debug=True)
+
+    application = tornado.web.Application([(r'/(?P<plugin>[^\/]+)',WSHandler)], debug=True)
     tornado.options.parse_command_line()
     server = tornado.httpserver.HTTPServer(application)
     server.listen(8888)

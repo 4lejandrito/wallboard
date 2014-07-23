@@ -5,19 +5,13 @@ import tornado.web
 import tornado.websocket
 import sys
  
-class Plugin(tornado.websocket.WebSocketHandler):
-    
-    def check_origin(self, origin):
-        return True
+class Plugin():
     
     def open(self):
-        self.start()
-      
-    def on_message(self, message):
-        getattr(self, message)()
+        'STAAAART'
  
-    def on_close(self):
-        self.close()
+    def close(self):
+        'CLOOOSE'
     
     def emitMessage(self, message):
         self.write(message)
