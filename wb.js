@@ -31,5 +31,7 @@ angular.module('wb', ['ui.gravatar'])
                 $scope.$emit('loading', false);    
             });
         }
-    } catch(err) {}
+    } catch(err) {
+        throw err;
+    }
 });       

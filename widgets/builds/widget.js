@@ -25,4 +25,15 @@ angular.module('wb').service('builds', function($http) {
             );
         }
     }
+}).directive('grid', function($interval) {
+    return {
+        scope: true,
+        link: function(scope, elem, attrs) {            
+            $interval(function(){
+                scope.columns = Math.min(Math.floor($(elem).width() / 300), 12);
+                scope.rows = Math.floor($(elem).height() / 180); 
+                scope.elems = Math.floor(scope.rows * scope.columns - 1);                
+            }, 100);          
+        }
+    };
 });
