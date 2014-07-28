@@ -1,2 +1,9 @@
-bower_components
+public/bower_components
 node_modules
+.DS_STORE
+*.swp
+*.rbc
+*.sass-cache
+/pkg
+/doc/api
+/Gemfile.lock
