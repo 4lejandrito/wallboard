@@ -1,19 +1,15 @@
 angular.module('wb', ['ui.gravatar'])
 
-.controller('wb', function($scope, $timeout) {
-    $scope.widgets = [{name: 'builds', w: 19, h: 8, config: {username: 'mdo'}}, {name: 'heroes', w: 8, h: 5, config: {}}];
-
-    $timeout(function() {    
-        $(".gridster > ul").gridster({
-            widget_margins: [10, 10], 
-            widget_base_dimensions: [30, 30],					
-            resize: {
-                enabled: true
-            },
-            autogrow_cols: false
-        }).data('gridster');  
-        $scope.loaded = true;
-    }, 500);
+.service('server', function($http) {
+    this.plugins = function() {        
+        return $http.get('plugins');
+    }    
+})
+.controller('wb', function($scope, server) {
+    server.plugins().success(function(plugins) {                
+        $scope.plugins = plugins.available;
+        $scope.widgets = plugins.enabled;
+    });          
 }).controller('widget', function($scope, $http, $injector) {        
     $scope.$on('loading', function(e, loading) {
         $scope.loading = loading;
@@ -34,4 +30,18 @@ angular.module('wb', ['ui.gravatar'])
     } catch(err) {
         throw err;
     }
+}).directive('gridster', function($interval) {
+    return {
+        scope: true,
+        link: function(scope, elem, attrs) {            
+            $(elem).gridster({
+                widget_margins: [10, 10], 
+                widget_base_dimensions: [30, 30],					
+                resize: {
+                    enabled: true
+                },
+                autogrow_cols: false
+            }).data('gridster');         
+        }
+    };
 });       
