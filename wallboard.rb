@@ -9,17 +9,24 @@ module Wallboard
         
         def initialize
             @config = {}
+            @w = 10
+            @h = 6
         end
         
-        def config
-            @config
-        end    
+        def to_json(*a)
+            {        
+                "name" => "builds",
+                "w" => @w,
+                "h" => @h,
+                "config" => @config
+            }
+        end        
     end
     
     class PluginManager
         def initialize(folder)
             @folder = folder
-            Dir.glob(folder + "/**/*.rb").each{|f| require_relative f}            
+            Dir.glob(folder + "/*/plugin.rb").each{|f| require_relative f}            
         end
         
         def available
@@ -27,7 +34,7 @@ module Wallboard
         end
         
         def enabled
-            [Object.const_get('Builds')::Main.new()].map { |p| {:name => 'builds', :config => p.config}}            
+            [Object.const_get('Builds')::Main.new()]            
         end
     end
                     
@@ -44,7 +51,7 @@ module Wallboard
         get "/plugins" do
             json({
                 :available => settings.pm.available,
-                :enabled => settings.pm.enabled
+                :enabled => settings.pm.enabled.map { |p| p.to_json}
             })
         end        
         

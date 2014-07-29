@@ -12,7 +12,7 @@
 	<body ng-app="wb">		
         
         <div class="gridster" ng-controller="wb">
-            <ul x-gridster ng-show="widgets">
+            <ul class="hide">
                 <li ng-controller="widget" ng-repeat="widget in widgets" data-row="1" data-col="1" data-sizex="{{widget.w}}" data-sizey="{{widget.h}}">
                     <link rel="stylesheet" type="text/css" ng-href="{{widget.name}}/public/styles.css">
                     <div class="wb-w-loading" ng-show="loading">
