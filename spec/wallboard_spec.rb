@@ -12,8 +12,7 @@ describe "Wallboard" do
     end
     
     before do        
-        app.set :plugins_folder, 'spec/plugins'
-        app.set :pm, double(:available => [{"name" => 'builds'}, {"name" => 'heroes'}], :enabled => [{"name" => "builds", "config" => {}}])
+        app.set :plugins_folder, 'spec/plugins'        
     end    
     
     it "should return the main page" do       
@@ -22,7 +21,7 @@ describe "Wallboard" do
         expect(last_response.body).to include('<title>Wallboard</title>')        
     end
     
-    it "should return the plugin assets page" do       
+    it "should return the plugin assets" do       
         get '/builds/public/index.html'        
         expect(last_response.headers['Content-Type']).to eq('text/html;charset=utf-8')       
         expect(last_response.body).to eq('this is html')        
@@ -35,20 +34,37 @@ describe "Wallboard" do
     end
     
     it "should return the plugins" do       
-        get '/plugins'        
+        get '/plugins'
         expect(last_response.headers['Content-Type']).to eq('application/json')       
         plugins = JSON.parse(last_response.body)        
-        expect(plugins["available"]).to eq([{"name" => 'builds'}, {"name" => 'heroes'}])
+        expect(plugins["available"]).to eq([{'name' => 'builds', 'class' => 'Builds::Main'}, {'name' => 'heroes', 'class' => 'Wallboard::Plugin'}])
+        expect(plugins["enabled"]).to eq([])
+    end
+    
+    it "should create plugins" do       
+        post '/plugins', :name => 'builds'
+        get '/plugins'
+        expect(last_response.headers['Content-Type']).to eq('application/json')       
+        plugins = JSON.parse(last_response.body)        
+        expect(plugins["available"]).to eq([{"name"=>"builds", "class"=>"Builds::Main"}, {"name"=>"heroes", "class"=>"Wallboard::Plugin"}])
         expect(plugins["enabled"]).to eq([{"name" => 'builds', "config" => {}}])
     end
 end
 
-describe "PluginManager" do
-    def app
-        Wallboard::PluginManager.new('spec/plugins')
+describe Wallboard::PluginManager do
+    
+    before do
+        @pm = Wallboard::PluginManager.new('spec/plugins')
     end
     
     it "should return the plugins in the folder" do               
-        expect(app.available).to eq([{:name => 'builds'}, {:name => 'heroes'}])        
+        expect(@pm.available).to eq([{:name => 'builds', :class => 'Builds::Main'}, {:name => 'heroes', :class => 'Wallboard::Plugin'}])        
+    end
+    
+    it "should create an instance of an available plugin" do
+        expect(@pm.enabled).to eq([])                  
+        @pm.create 'builds'                    
+        expect(@pm.enabled.length).to eq(1)            
+        expect(@pm.enabled[0]).to be_instance_of(Builds::Main)
     end
 end

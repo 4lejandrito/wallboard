@@ -4,56 +4,59 @@ require 'sinatra-websocket'
 require 'pathname'
 
 module Wallboard    
-
-    class Plugin
         
+    class Plugin
         def initialize
+            @name = "builds"
             @config = {}
             @w = 10
             @h = 6
         end
-        
-        def to_json(*a)
-            {        
-                "name" => "builds",
-                "w" => @w,
-                "h" => @h,
-                "config" => @config
-            }
-        end        
     end
     
     class PluginManager
+        attr_accessor :enabled, :available
+        
         def initialize(folder)
             @folder = folder
             Dir.glob(folder + "/*/plugin.rb").each{|f| require_relative f}            
+            self.available = Dir.glob(@folder + '/*').map do |f| 
+                name = Pathname.new(f).basename.to_s
+                clazz = Plugin.name
+                begin  
+                    clazz = Object.const_get(name.capitalize())::Main.name
+                rescue NameError                
+                end
+                {:name => name, :class => clazz}
+            end
+            self.enabled = []
         end
         
-        def available
-            Dir.glob(@folder + '/*').map { |f| {:name => Pathname.new(f).basename.to_s}}                
-        end
-        
-        def enabled
-            [Object.const_get('Builds')::Main.new()]            
+        def create(name)
+            self.enabled << Object.const_get('Builds::Main').new        
         end
     end
                     
-    class API < Sinatra::Base         
-        configure do                          
+    class API < Sinatra::Base   
+        configure do             
             set :plugins_folder, 'plugins'
             set :pm, PluginManager.new(settings.plugins_folder)
         end        
         
         get '/' do
-            send_file File.join(settings.public_folder, 'index.html')
+            erb File.read(File.join(settings.public_folder, 'index.html'))
         end
         
         get "/plugins" do
             json({
                 :available => settings.pm.available,
-                :enabled => settings.pm.enabled.map { |p| p.to_json}
+                :enabled => settings.pm.enabled
             })
-        end        
+        end    
+        
+        post "/plugins" do
+            json settings.pm.create(params[:name])
+        end    
         
         get "/:plugin/public/:file" do
             send_file File.join(settings.plugins_folder, params[:plugin], 'public', params[:file])

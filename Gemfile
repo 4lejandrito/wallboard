@@ -6,3 +6,6 @@ gem 'travis'
 gem 'sinatra-websocket'
 gem 'sinatra-cross_origin'
 gem 'rspec'
+gem "sinatra-activerecord"
+gem "sqlite3"
+gem "rake"
