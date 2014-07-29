@@ -47,7 +47,7 @@ describe "Wallboard" do
         expect(last_response.headers['Content-Type']).to eq('application/json')       
         plugins = JSON.parse(last_response.body)        
         expect(plugins["available"]).to eq([{"name"=>"builds", "class"=>"Builds::Main"}, {"name"=>"heroes", "class"=>"Wallboard::Plugin"}])
-        expect(plugins["enabled"]).to eq([{"name" => 'builds', "config" => {}}])
+        expect(plugins["enabled"]).to eq([{"name" => 'builds', "config" => {}, "w" => 10, "h" => 6}])
     end
 end
 

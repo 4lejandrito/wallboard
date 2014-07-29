@@ -1,5 +1,6 @@
 require 'sinatra/base'
 require 'sinatra/json'
+require 'sinatra/activerecord'
 require 'sinatra-websocket'
 require 'pathname'
 
@@ -29,7 +30,7 @@ module Wallboard
                 end
                 {:name => name, :class => clazz}
             end
-            self.enabled = []
+            self.enabled = []            
         end
         
         def create(name)
