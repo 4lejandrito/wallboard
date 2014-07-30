@@ -1,3 +1,3 @@
-require_relative "wallboard.rb"
+require "./wallboard.rb"
 
 run Wallboard::API

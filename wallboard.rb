@@ -7,8 +7,10 @@ require 'pathname'
 module Wallboard    
         
     class Plugin
-        def initialize
-            @name = "builds"
+        attr_accessor :name
+        
+        def initialize(name)
+            @name = name
             @config = {}
             @w = 10
             @h = 6
@@ -34,7 +36,11 @@ module Wallboard
         end
         
         def create(name)
-            self.enabled << Object.const_get('Builds::Main').new        
+            self.enabled << self.available.select { |p| p[:name] == name}[0][:class].split('::').inject(Object) {|o,c| o.const_get c}.new(name)        
+        end
+        
+        def get(name)
+            self.enabled.select { |p| p.name == name}[0]
         end
     end
                     
@@ -64,7 +70,7 @@ module Wallboard
         end
         
         get "/:plugin" do
-            plugin = Object.const_get(params[:plugin].capitalize())::Main.new();
+            plugin = settings.pm.get(params[:plugin]);
 
             if request.websocket?          
                 request.websocket do |ws|
