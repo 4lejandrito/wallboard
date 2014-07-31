@@ -6,4 +6,3 @@ node_modules
 *.sass-cache
 /pkg
 /doc/api
-/Gemfile.lock
