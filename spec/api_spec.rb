@@ -1,6 +1,7 @@
 ENV['RACK_ENV'] = 'test'
 
-require_relative '../wallboard.rb'
+require 'wallboard/api'
+require 'wallboard/pluginmanager'
 require 'rspec'
 require 'rack/test'
 
@@ -12,7 +13,8 @@ describe Wallboard::API do
     end
     
     before do        
-        app.set :plugins_folder, 'spec/plugins'        
+        app.set :plugins_folder, File.join(Dir.pwd, 'spec/plugins')
+        app.set :pm, Wallboard::PluginManager.new(app.settings.plugins_folder)
     end    
     
     it "should return the main page" do       
@@ -50,32 +52,5 @@ describe Wallboard::API do
         expect(plugins["available"]).to include({"name"=>"builds", "class"=>"Builds::Main"})
         expect(plugins["available"]).to include({"name"=>"heroes", "class"=>"Wallboard::Plugin"})
         expect(plugins["enabled"]).to eq([{"name" => 'builds', "config" => {}, "w" => 10, "h" => 6}])
-    end
-end
-
-describe Wallboard::PluginManager do
-    
-    before do
-        @pm = Wallboard::PluginManager.new('spec/plugins')
-    end
-    
-    it "should return the plugins in the folder" do               
-        expect(@pm.available).to include({:name => 'builds', :class => 'Builds::Main'})
-        expect(@pm.available).to include({:name => 'heroes', :class => 'Wallboard::Plugin'})        
-    end
-    
-    it "should create an instance of an available plugin" do
-        expect(@pm.enabled).to eq([])                  
-        @pm.create 'builds'                    
-        expect(@pm.enabled.length).to eq(1)            
-        expect(@pm.enabled[0]).to be_instance_of(Builds::Main)        
-        expect(@pm.enabled[0].name).to eq('builds')        
-    end
-    
-    it "should get a plugin by name" do
-        expect(@pm.enabled).to eq([])                  
-        @pm.create 'builds'                    
-        expect(@pm.get('builds')).to be_instance_of(Builds::Main)        
-        expect(@pm.enabled[0].name).to eq('builds')        
     end
 end

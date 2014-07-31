@@ -2,51 +2,12 @@ require 'sinatra/base'
 require 'sinatra/json'
 require 'sinatra/activerecord'
 require 'sinatra-websocket'
-require 'pathname'
+require 'wallboard/pluginmanager'
 
-module Wallboard    
-        
-    class Plugin
-        attr_accessor :name
-        
-        def initialize(name)
-            @name = name
-            @config = {}
-            @w = 10
-            @h = 6
-        end
-    end
-    
-    class PluginManager
-        attr_accessor :enabled, :available
-        
-        def initialize(folder)
-            @folder = folder
-            Dir.glob(folder + "/*/plugin.rb").each{|f| require_relative f}            
-            self.available = Dir.glob(@folder + '/*').map do |f| 
-                name = Pathname.new(f).basename.to_s
-                clazz = Plugin.name
-                begin  
-                    clazz = Object.const_get(name.capitalize())::Main.name
-                rescue NameError                
-                end
-                {:name => name, :class => clazz}
-            end
-            self.enabled = []            
-        end
-        
-        def create(name)
-            self.enabled << self.available.select { |p| p[:name] == name}[0][:class].split('::').inject(Object) {|o,c| o.const_get c}.new(name)        
-        end
-        
-        def get(name)
-            self.enabled.select { |p| p.name == name}[0]
-        end
-    end
-                    
+module Wallboard                
     class API < Sinatra::Base   
         configure do             
-            set :plugins_folder, 'plugins'
+            set :plugins_folder, File.join(File.dirname(__FILE__), 'plugins')
             set :pm, PluginManager.new(settings.plugins_folder)
         end        
         

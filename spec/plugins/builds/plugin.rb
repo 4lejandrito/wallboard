@@ -1,4 +1,4 @@
-require 'travis'
+require 'wallboard/plugin'
 
 module Builds
     class Main < Wallboard::Plugin   

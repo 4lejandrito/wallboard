@@ -1,3 +1,5 @@
-require "./wallboard.rb"
+$: << './lib'
+
+require "wallboard"
 
 run Wallboard::API
