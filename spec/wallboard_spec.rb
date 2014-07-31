@@ -4,7 +4,7 @@ require_relative '../wallboard.rb'
 require 'rspec'
 require 'rack/test'
 
-describe "Wallboard" do
+describe Wallboard::API do
     include Rack::Test::Methods
     
     def app
