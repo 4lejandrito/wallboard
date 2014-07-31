@@ -20,7 +20,7 @@ module Wallboard
         end    
         
         post "/plugins" do
-            json settings.pm.create(params[:name])
+            if plugin = settings.pm.create(params[:name]) then json(plugin) else status 400 end
         end
         
         get "/:plugin/public/:file" do

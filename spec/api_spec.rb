@@ -1,5 +1,6 @@
 ENV['RACK_ENV'] = 'test'
 
+require 'sinatra/respond_with'
 require 'wallboard/api'
 require 'wallboard/pluginmanager'
 require 'rspec'
@@ -46,11 +47,23 @@ describe Wallboard::API do
     
     it "should create plugins" do       
         post '/plugins', :name => 'builds'
+        expect(JSON.parse(last_response.body)).to eq({"name" => 'builds', "config" => {}, "w" => 10, "h" => 6})
         get '/plugins'
         expect(last_response.headers['Content-Type']).to eq('application/json')       
         plugins = JSON.parse(last_response.body)        
         expect(plugins["available"]).to include({"name"=>"builds", "class"=>"Builds::Main"})
         expect(plugins["available"]).to include({"name"=>"heroes", "class"=>"Wallboard::Plugin"})
         expect(plugins["enabled"]).to eq([{"name" => 'builds', "config" => {}, "w" => 10, "h" => 6}])
+    end
+    
+    it "should return an error if we try to create a non available plugin" do       
+        post '/plugins', :name => 'idontexist'
+        expect(last_response.status).to eq(400)
+        get '/plugins'
+        expect(last_response.headers['Content-Type']).to eq('application/json')       
+        plugins = JSON.parse(last_response.body)        
+        expect(plugins["available"]).to include({"name"=>"builds", "class"=>"Builds::Main"})
+        expect(plugins["available"]).to include({"name"=>"heroes", "class"=>"Wallboard::Plugin"})
+        expect(plugins["enabled"]).to eq([])
     end
 end

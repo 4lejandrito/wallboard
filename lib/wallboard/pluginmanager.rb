@@ -20,7 +20,16 @@ module Wallboard
         end
         
         def create(name)
-            self.enabled << self.available.select { |p| p[:name] == name}[0][:class].split('::').inject(Object) {|o,c| o.const_get c}.new(name)        
+            template = self.geta(name)
+            if (template)
+                plugin = template[:class].split('::').inject(Object) {|o,c| o.const_get c}.new(name)
+                self.enabled << plugin
+                plugin
+            end
+        end
+        
+        def geta(name)
+            self.available.select { |p| p[:name] == name}[0]
         end
         
         def get(name)
