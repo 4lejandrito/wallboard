@@ -55,15 +55,12 @@ module Wallboard
         end
         
         get "/plugins" do
-            json({
-                :available => settings.pm.available,
-                :enabled => settings.pm.enabled
-            })
+            json(settings.pm)
         end    
         
         post "/plugins" do
             json settings.pm.create(params[:name])
-        end    
+        end
         
         get "/:plugin/public/:file" do
             send_file File.join(settings.plugins_folder, params[:plugin], 'public', params[:file])
