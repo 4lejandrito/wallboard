@@ -27,10 +27,9 @@ describe Wallboard::PluginManager do
         expect(@pm.enabled.length).to eq(0)            
     end
     
-    it "gets a plugin by name" do
+    it "gets a plugin by id" do
         expect(@pm.enabled).to eq([])                  
-        @pm.create 'builds'                    
-        expect(@pm.get('builds')).to be_instance_of(Builds::Main)        
-        expect(@pm.enabled[0].name).to eq('builds')        
+        plugin = @pm.create 'builds'                    
+        expect(@pm.get(plugin.id)).to be(plugin)        
     end
 end

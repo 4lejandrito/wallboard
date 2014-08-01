@@ -52,15 +52,16 @@ describe Wallboard::API do
     end
 
     describe "POST /plugins" do
-        it "creates plugins" do       
+        it "creates plugins" do
+            expect(SecureRandom).to receive(:uuid) {'some_uuid'}            
             post '/plugins', :name => 'builds'
-            expect(JSON.parse(last_response.body)).to eq({"name" => 'builds', "config" => {}, "w" => 10, "h" => 6})
+            expect(JSON.parse(last_response.body)).to eq({"id" => "some_uuid", "name" => 'builds', "config" => {}, "w" => 10, "h" => 6})
             get '/plugins'
             expect(last_response.headers['Content-Type']).to eq('application/json')       
             plugins = JSON.parse(last_response.body)        
             expect(plugins["available"]).to include({"name"=>"builds", "class"=>"Builds::Main"})
             expect(plugins["available"]).to include({"name"=>"heroes", "class"=>"Wallboard::Plugin"})
-            expect(plugins["enabled"]).to eq([{"name" => 'builds', "config" => {}, "w" => 10, "h" => 6}])
+            expect(plugins["enabled"]).to eq([{"id" => "some_uuid", "name" => 'builds', "config" => {}, "w" => 10, "h" => 6}])
         end
 
         it "returns an error if we try to create a non available plugin" do       

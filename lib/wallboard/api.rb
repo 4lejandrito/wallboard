@@ -27,8 +27,8 @@ module Wallboard
             send_file File.join(settings.plugins_folder, params[:plugin], 'public', params[:file])
         end
         
-        get "/:plugin" do
-            plugin = settings.pm.get(params[:plugin]);
+        get "/plugin/:id" do
+            plugin = settings.pm.get(params[:id]);
 
             if request.websocket?          
                 request.websocket do |ws|

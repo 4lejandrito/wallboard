@@ -32,9 +32,8 @@ module Wallboard
             self.available.select { |p| p[:name] == name}[0]
         end
         
-        def get(name)
-            self.enabled.select { |p| p.name == name}[0]
+        def get(id)
+            self.enabled.select { |p| p.id == id}[0]
         end
     end
-    
 end

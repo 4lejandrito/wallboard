@@ -1,8 +1,11 @@
+require 'securerandom'
+
 module Wallboard
     class Plugin
-        attr_accessor :name
+        attr_accessor :name, :id
 
         def initialize(name)
+            @id = SecureRandom.uuid
             @name = name
             @config = {}
             @w = 10
