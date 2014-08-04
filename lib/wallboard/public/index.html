@@ -13,7 +13,7 @@
         
         <div class="gridster" ng-controller="wb">
             <ul class="hide">
-                <li ng-controller="widget" ng-repeat="widget in widgets" data-row="1" data-col="1" data-sizex="{{widget.w}}" data-sizey="{{widget.h}}">
+                <li ng-controller="widget" ng-repeat="widget in widgets" data-row="1" data-col="1" data-sizex="{{widget.layout.w}}" data-sizey="{{widget.layout.h}}">
                     <link rel="stylesheet" type="text/css" ng-href="{{widget.name}}/public/styles.css">
                     <div class="wb-w-loading" ng-show="loading">
                         <h1><i class="fa fa-th"></i></h1>
