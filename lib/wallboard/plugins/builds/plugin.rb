@@ -1,3 +1,4 @@
+require 'wallboard/plugin'
 require 'travis'
 
 module Builds

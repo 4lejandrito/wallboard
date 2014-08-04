@@ -12,21 +12,21 @@
 	<body ng-app="wb">		
         
         <div class="gridster" ng-controller="wb">
-            <ul ng-show="loaded">
+            <ul class="hide">
                 <li ng-controller="widget" ng-repeat="widget in widgets" data-row="1" data-col="1" data-sizex="{{widget.w}}" data-sizey="{{widget.h}}">
-                    <link rel="stylesheet" type="text/css" ng-href="widgets/{{widget.name}}/styles.css">
+                    <link rel="stylesheet" type="text/css" ng-href="{{widget.name}}/public/styles.css">
                     <div class="wb-w-loading" ng-show="loading">
                         <h1><i class="fa fa-th"></i></h1>
                         <div>Loading <strong>{{widget.name}}</strong></div>
                         <i class="fa fa-spin fa-circle-o-notch"></i>
                     </div>
-                    <div ng-show="!loading && widget.config" class="wb-widget wb-widget-{{widget.name}}" ng-include="'widgets/' + widget.name + '/index.html'"></div>
+                    <div ng-show="!loading && widget.config" class="wb-widget wb-widget-{{widget.name}}" ng-include="widget.name + '/public/index.html'"></div>
                     <div class="wb-w-settings" ng-show="!widget.config">
                         <strong>{{widget.name}}</strong> widget!<br><a href="settings"><i class="fa fa-cog"></i> Set up</a>
                     </div>
                 </li>
             </ul>
-            <div class="wb-loading" ng-show="!loaded">
+            <div class="wb-loading" ng-show="!widgets">
                 <i class="fa fa-th"></i>
                 <div>Loading <strong>Wallboard</strong></div>
                 <i class="fa fa-spin fa-circle-o-notch"></i>
@@ -42,8 +42,8 @@
 		
         <script type="text/javascript" src="wb.js"></script>
         
-        <script type="text/javascript" src="widgets/builds/widget.js"></script>
-        <script type="text/javascript" src="widgets/heroes/widget.js"></script>
+        <script type="text/javascript" src="builds/public/widget.js"></script>
+        <script type="text/javascript" src="heroes/public/widget.js"></script>
         
 	</body>
 </html>
