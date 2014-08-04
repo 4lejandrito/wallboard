@@ -30,10 +30,10 @@ describe Wallboard::API do
     
     describe "GET /:plugin/public/:asset" do
         it "returns the plugin assets" do       
-            get '/builds/public/index.html'        
-            expect(last_response.headers['Content-Type']).to eq('text/html;charset=utf-8')       
-            expect(last_response.body).to eq('this is html')        
-            get '/builds/public/styles.css'        
+            get '/builds/public/index.html'
+            expect(last_response.headers['Content-Type']).to eq('text/html;charset=utf-8')
+            expect(last_response.body).to eq('this is html')
+            get '/builds/public/styles.css'
             expect(last_response.headers['Content-Type']).to eq('text/css;charset=utf-8')       
             expect(last_response.body).to eq('this is css')        
             get '/builds/public/widget.js'        
@@ -55,7 +55,7 @@ describe Wallboard::API do
 
     describe "POST /plugins" do
         it "creates plugins" do
-            expect(app.settings.pm).to receive(:create) {Wallboard::Plugin.new('some_uuid', 'test-plugin')}
+            expect(app.settings.pm).to receive(:create).with("whatever").and_return(Wallboard::Plugin.new('some_uuid', 'test-plugin'))
             post '/plugins', :name => 'whatever'
             expect(last_response.headers['Content-Type']).to eq('application/json')       
             expect(last_response.body).to eq({
@@ -67,9 +67,19 @@ describe Wallboard::API do
         end
 
         it "returns an error if we try to create a non available plugin" do       
-            expect(app.settings.pm).to receive(:create) {nil}
+            expect(app.settings.pm).to receive(:create).with("whatever").and_return(nil)
             post '/plugins', :name => 'whatever'
             expect(last_response.status).to eq(400)
+        end
+    end
+    
+    describe "POST /plugin/:id/config" do
+       it 'stores config into the plugin' do
+           plu = Wallboard::Plugin.new('some_uuid', 'test-plugin')
+           expect(app.settings.pm).to receive(:get).with("some_uuid").and_return(plu)
+           post '/plugin/some_uuid/config', {'key1'=>'value1', 'key2' => 'value2'}.to_json, { 'CONTENT_TYPE' => 'application/json'}
+           expect(plu.config['key1']).to eq('value1')
+           expect(plu.config['key2']).to eq('value2')
         end
     end
 end

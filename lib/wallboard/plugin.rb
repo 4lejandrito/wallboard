@@ -1,6 +1,6 @@
 module Wallboard
     class Plugin
-        attr_accessor :name, :id
+        attr_accessor :name, :id, :config
 
         def initialize(id, name)
             @id = id

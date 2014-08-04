@@ -27,6 +27,11 @@ module Wallboard
             send_file File.join(settings.plugins_folder, params[:plugin], 'public', params[:file])
         end
         
+        post "/plugin/:id/config" do
+            plugin = settings.pm.get(params[:id]);
+            plugin.config = JSON.parse request.body.read
+        end
+        
         get "/plugin/:id" do
             plugin = settings.pm.get(params[:id]);
 
