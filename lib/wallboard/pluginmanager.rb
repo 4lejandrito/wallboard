@@ -36,5 +36,9 @@ module Wallboard
         def get(id)
             self.enabled.select { |p| p.id == id}[0]
         end
+        
+        def delete(id)
+            self.enabled.delete(self.enabled.select { |p| p.id == id}[0])
+        end
     end
 end

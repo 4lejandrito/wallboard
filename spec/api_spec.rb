@@ -49,7 +49,12 @@ describe Wallboard::API do
             plugins = JSON.parse(last_response.body)        
             expect(plugins["available"]).to include({"name"=>"builds", "class"=>"Builds::Main"})
             expect(plugins["available"]).to include({"name"=>"heroes", "class"=>"Wallboard::Plugin"})
-            expect(plugins["enabled"]).to eq([{"id" => "some_uuid", "name" => 'test-plugin', "config" => {}, "layout" => {"w" => 10, "h" => 6}}])
+            expect(plugins["enabled"]).to eq([{
+                "id" => "some_uuid",
+                "name" => 'test-plugin',
+                "config" => {},
+                "layout" => {"w" => 10, "h" => 6, "x" => 0, "y" => 0}
+            }])
         end
     end
 
@@ -62,7 +67,7 @@ describe Wallboard::API do
                 "id" => "some_uuid",
                 "name" => 'test-plugin',
                 "config" => {},
-                "layout" => {"w" => 10, "h" => 6}
+                "layout" => {"w" => 10, "h" => 6, "x" => 0, "y" => 0}
             }.to_json)
         end
 
@@ -80,6 +85,14 @@ describe Wallboard::API do
            post '/plugin/some_uuid/config', {'key1'=>'value1', 'key2' => 'value2'}.to_json, { 'CONTENT_TYPE' => 'application/json'}
            expect(plu.config['key1']).to eq('value1')
            expect(plu.config['key2']).to eq('value2')
+        end
+    end
+    
+    describe "DELETE /plugin/:id" do
+       it 'deletes an enabled plugin' do
+           plu = Wallboard::Plugin.new('some_uuid', 'test-plugin')
+           expect(app.settings.pm).to receive(:delete).with("some_uuid").and_return(plu)
+           delete '/plugin/some_uuid'           
         end
     end
 end

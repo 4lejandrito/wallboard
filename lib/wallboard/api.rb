@@ -32,6 +32,10 @@ module Wallboard
             plugin.config = JSON.parse request.body.read
         end
         
+        delete "/plugin/:id" do
+            json settings.pm.delete(params[:id]);            
+        end
+        
         get "/plugin/:id" do
             plugin = settings.pm.get(params[:id]);
 
