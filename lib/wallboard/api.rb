@@ -16,7 +16,7 @@ module Wallboard
         end
         
         get "/plugins" do
-            json(settings.pm)
+            json({:enabled => settings.pm.enabled, :available => settings.pm.available})
         end    
         
         post "/plugins" do

@@ -1,4 +1,5 @@
 require 'pathname'
+require 'securerandom'
 
 module Wallboard
     class PluginManager
@@ -22,7 +23,7 @@ module Wallboard
         def create(name)
             template = self.geta(name)
             if (template)
-                plugin = template[:class].split('::').inject(Object) {|o,c| o.const_get c}.new(name)
+                plugin = template[:class].split('::').inject(Object) {|o,c| o.const_get c}.new(SecureRandom.uuid, name)
                 self.enabled << plugin
                 plugin
             end
