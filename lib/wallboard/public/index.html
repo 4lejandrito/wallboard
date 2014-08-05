@@ -12,7 +12,7 @@
 	</head>
 	<body ng-app="wb" ng-controller="wb">		
                     
-        <div ng-show="widgets" gridster="gridsterOpts" class="wb-grid">
+        <div ng-show="widgets.length > 0" gridster="gridsterOpts" class="wb-grid">
             <ul>
                 <li
                     ng-controller="widget"
@@ -24,20 +24,27 @@
                     size-y="widget.layout.h">
                     
                     <link rel="stylesheet" type="text/css" ng-href="{{widget.name}}/public/styles.css">
+                  
                     <div class="wb-w-loading" ng-show="loading">
                         <h1><i class="fa fa-th"></i></h1>
                         <div>Loading <strong>{{widget.name}}</strong></div>
                         <i class="fa fa-spin fa-circle-o-notch"></i>
                     </div>
+                    
                     <div ng-show="!loading && widget.config"
                          class="wb-widget wb-widget-{{widget.name}}"
                          ng-include="widget.name + '/public/index.html'">
                     </div>
+                    
                     <div class="wb-w-settings" ng-show="!widget.config">
                         <strong>{{widget.name}}</strong> widget!<br><a href="settings"><i class="fa fa-cog"></i> Set up</a>
                     </div>
                 </li>
             </ul>            
+        </div>
+        
+        <div ng-show="widgets.length == 0">
+            <h1 color="red">Shit</h1>           
         </div>
         
         <div class="wb-loading" ng-show="!widgets">

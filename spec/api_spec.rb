@@ -86,6 +86,30 @@ describe Wallboard::API do
            expect(plu.config['key1']).to eq('value1')
            expect(plu.config['key2']).to eq('value2')
         end
+        
+        it "returns an error if we try to modify a non enabled plugin" do       
+            expect(app.settings.pm).to receive(:get).with("some_uuid").and_return(nil)
+            post '/plugin/some_uuid/config', {'key1'=>'value1', 'key2' => 'value2'}.to_json, { 'CONTENT_TYPE' => 'application/json'}
+            expect(last_response.status).to eq(404)
+        end
+    end
+    
+    describe "POST /plugin/:id/layout" do
+       it 'stores layout into the plugin' do
+           plu = Wallboard::Plugin.new('some_uuid', 'test-plugin')
+           expect(app.settings.pm).to receive(:get).with("some_uuid").and_return(plu)
+           post '/plugin/some_uuid/layout', {'x'=>0, 'y' => 0, 'w' => 10, 'h' => 10}.to_json, { 'CONTENT_TYPE' => 'application/json'}
+           expect(plu.layout['x']).to eq(0)
+           expect(plu.layout['y']).to eq(0)
+           expect(plu.layout['w']).to eq(10)
+           expect(plu.layout['h']).to eq(10)
+        end
+        
+        it "returns an error if we try to modify a non enabled plugin" do       
+            expect(app.settings.pm).to receive(:get).with("whatever").and_return(nil)
+            post '/plugin/whatever/layout', {'x'=>0, 'y' => 0, 'w' => 10, 'h' => 10}.to_json, { 'CONTENT_TYPE' => 'application/json'}
+            expect(last_response.status).to eq(404)
+        end
     end
     
     describe "DELETE /plugin/:id" do
