@@ -15,11 +15,11 @@ module Wallboard
             erb File.read(File.join(settings.public_folder, 'index.html'))
         end
         
-        get "/plugins" do
+        get "/plugin" do
             json({:enabled => settings.pm.enabled, :available => settings.pm.available})
         end    
         
-        post "/plugins" do
+        post "/plugin" do
             if plugin = settings.pm.create(params[:name]) then json(plugin) else status 400 end
         end
         
@@ -33,7 +33,7 @@ module Wallboard
         end
         
         delete "/plugin/:id" do
-            json settings.pm.delete(params[:id]);            
+            if plugin = settings.pm.delete(params[:id]) then json(plugin) else status 404 end            
         end
         
         get "/plugin/:id" do

@@ -42,9 +42,9 @@ describe Wallboard::API do
         end
     end
     
-    describe "GET /plugins" do
+    describe "GET /plugin" do
         it "returns the plugins" do 
-            get '/plugins'
+            get '/plugin'
             expect(last_response.headers['Content-Type']).to eq('application/json')       
             plugins = JSON.parse(last_response.body)        
             expect(plugins["available"]).to include({"name"=>"builds", "class"=>"Builds::Main"})
@@ -58,10 +58,10 @@ describe Wallboard::API do
         end
     end
 
-    describe "POST /plugins" do
+    describe "POST /plugin" do
         it "creates plugins" do
             expect(app.settings.pm).to receive(:create).with("whatever").and_return(Wallboard::Plugin.new('some_uuid', 'test-plugin'))
-            post '/plugins', :name => 'whatever'
+            post '/plugin', :name => 'whatever'
             expect(last_response.headers['Content-Type']).to eq('application/json')       
             expect(last_response.body).to eq({
                 "id" => "some_uuid",
@@ -73,7 +73,7 @@ describe Wallboard::API do
 
         it "returns an error if we try to create a non available plugin" do       
             expect(app.settings.pm).to receive(:create).with("whatever").and_return(nil)
-            post '/plugins', :name => 'whatever'
+            post '/plugin', :name => 'whatever'
             expect(last_response.status).to eq(400)
         end
     end
@@ -93,6 +93,11 @@ describe Wallboard::API do
            plu = Wallboard::Plugin.new('some_uuid', 'test-plugin')
            expect(app.settings.pm).to receive(:delete).with("some_uuid").and_return(plu)
            delete '/plugin/some_uuid'           
+        end
+        it "returns an error if we try to delete a non enabled plugin" do       
+            expect(app.settings.pm).to receive(:delete).with("whatever").and_return(nil)
+            delete '/plugin/whatever'
+            expect(last_response.status).to eq(404)
         end
     end
 end
