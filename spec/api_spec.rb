@@ -53,7 +53,7 @@ describe Wallboard::API do
                 "id" => "some_uuid",
                 "name" => 'test-plugin',
                 "config" => {},
-                "layout" => {"w" => 10, "h" => 6, "x" => 0, "y" => 0}
+                "layout" => {}
             }])
         end
     end
@@ -67,7 +67,7 @@ describe Wallboard::API do
                 "id" => "some_uuid",
                 "name" => 'test-plugin',
                 "config" => {},
-                "layout" => {"w" => 10, "h" => 6, "x" => 0, "y" => 0}
+                "layout" => {}
             }.to_json)
         end
 

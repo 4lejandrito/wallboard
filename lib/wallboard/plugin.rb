@@ -6,7 +6,7 @@ module Wallboard
             @id = id
             @name = name
             @config = {}
-            @layout = {:w => 10, :h => 6, :x => 0, :y => 0}
+            @layout = {}
         end
     end
 end
