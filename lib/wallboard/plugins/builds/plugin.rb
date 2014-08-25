@@ -6,7 +6,7 @@ module Builds
         def get
             client = Travis::Client.new
             client.github_auth('1f5fe06e1616dacf11606678b841b527d5b4015a')
-            builds = Travis::Repository.find_all(member: '4lejandrito').map {|repo| repo.last_build()}.compact            
+            builds = Travis::Repository.find_all(member: 'mdo').map {|repo| repo.last_build()}.compact            
             builds.map do |build|
                 {
                     'name' => build.repository.name,
