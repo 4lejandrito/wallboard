@@ -19,11 +19,11 @@ describe Wallboard::Plugin do
         expect(@unit.config['key3']).to eq(nil)
     end
     
-    it "stores the layout" do
-        @unit.layout = {:x => 0, :y => 0, :w => 0, :h => 0}
-        expect(@unit.layout[:x]).to eq(0)
-        expect(@unit.layout[:y]).to eq(0)
-        expect(@unit.layout[:w]).to eq(0)
-        expect(@unit.layout[:h]).to eq(0)
+    it "stores the layout as a map" do
+        @unit.layout = {'x' => 0, 'y' => 0, 'w' => 0, 'h' => 0}
+        expect(@unit.layout['x']).to eq(0)
+        expect(@unit.layout['y']).to eq(0)
+        expect(@unit.layout['w']).to eq(0)
+        expect(@unit.layout['h']).to eq(0)
     end
 end
