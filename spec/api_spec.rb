@@ -85,6 +85,7 @@ describe Wallboard::API do
            post '/plugin/some_uuid/config', {'key1'=>'value1', 'key2' => 'value2'}.to_json, { 'CONTENT_TYPE' => 'application/json'}
            expect(plu.config['key1']).to eq('value1')
            expect(plu.config['key2']).to eq('value2')
+           expect(last_response.body).to eq(plu.config.to_json)
         end
         
         it "returns an error if we try to modify a non enabled plugin" do       
@@ -103,6 +104,7 @@ describe Wallboard::API do
            expect(plu.layout['y']).to eq(0)
            expect(plu.layout['w']).to eq(10)
            expect(plu.layout['h']).to eq(10)
+           expect(last_response.body).to eq(plu.layout.to_json)
         end
         
         it "returns an error if we try to modify a non enabled plugin" do       

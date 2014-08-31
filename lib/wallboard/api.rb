@@ -43,12 +43,12 @@ module Wallboard
         
         post "/plugin/:id/config" do
             plugin = settings.pm.get(params[:id]);
-            if plugin then plugin.config = JSON.parse request.body.read else status 404 end
+            if plugin then json(plugin.config = (JSON.parse request.body.read)) else status 404 end
         end
         
         post "/plugin/:id/layout" do
             plugin = settings.pm.get(params[:id]);
-            if plugin then plugin.layout = JSON.parse request.body.read else status 404 end
+            if plugin then json(plugin.layout = (JSON.parse request.body.read)) else status 404 end
         end
         
         delete "/plugin/:id" do
