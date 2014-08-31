@@ -1,6 +1,7 @@
 require 'sinatra/base'
 require 'sinatra/json'
 require 'sinatra/activerecord'
+require 'sinatra/assetpack'
 require 'sinatra-websocket'
 require 'wallboard/pluginmanager'
 
@@ -11,6 +12,19 @@ module Wallboard
             set :pm, PluginManager.new(settings.plugins_folder)
         end        
         
+        register Sinatra::AssetPack
+
+        assets do
+            serve '/plugins', :from => 'plugins'
+
+            js :plugins, [
+                '/plugins/*/public/widget.js'
+            ]
+            css :plugins, [
+                '/plugins/*/public/styles.css'
+            ]
+        end
+
         get '/' do
             erb File.read(File.join(settings.public_folder, 'index.html'))
         end

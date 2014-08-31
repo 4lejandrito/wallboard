@@ -8,3 +8,4 @@ gem 'sinatra-cross_origin'
 gem 'rspec'
 gem "sinatra-activerecord"
 gem "rake"
+gem 'sinatra-assetpack'

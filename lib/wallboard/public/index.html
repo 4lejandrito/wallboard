@@ -9,6 +9,7 @@
         <link rel="stylesheet" href="bower_components/jquery-ui/themes/base/all.css" />        
         <link rel="stylesheet" href="bower_components/angular-gridster/dist/angular-gridster.min.css" />        
 		<link rel="stylesheet" href="wb.css">
+        <%= css :plugins %>
 	</head>
 	<body ng-app="wb" ng-controller="wb">		
                     
@@ -22,9 +23,7 @@
                     col="widget.layout.x"
                     size-x="widget.layout.w"
                     size-y="widget.layout.h">
-                    
-                    <link rel="stylesheet" type="text/css" ng-href="{{widget.name}}/public/styles.css">
-                  
+
                     <div class="wb-w-loading" ng-show="loading">
                         <h1><i class="fa fa-th"></i></h1>
                         <div>Loading <strong>{{widget.name}}</strong></div>
@@ -63,11 +62,10 @@
         <script type="text/javascript" src="bower_components/angular-gravatar/build/md5.js"></script>
         <script type="text/javascript" src="bower_components/angular-gravatar/build/angular-gravatar.js"></script>		        
         <script type="text/javascript" src="bower_components/angular-gridster/src/angular-gridster.js"></script>		
-		
+        
         <script type="text/javascript" src="wb.js"></script>
-        
-        <script type="text/javascript" src="builds/public/widget.js"></script>
-        <script type="text/javascript" src="heroes/public/widget.js"></script>
-        
+
+        <%= js :plugins %>
+
 	</body>
 </html>
