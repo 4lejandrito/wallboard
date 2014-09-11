@@ -43,11 +43,15 @@
         </div>
         
         <div class="available">
-            <h2><i class="fa fa-plus"></i> Add a widget</h2>
-            <ul class="small-block-grid-5">  
+            <h2><i class="fa fa-plus-square-o"></i> Add widgets</h2>
+            <ul class="small-block-grid-4">  
                 <li ng-repeat="plugin in plugins">                                                                
                     <a href="" ng-click="addWidget(plugin)">                        
-                        <div><strong>{{plugin.name}}</strong></div>                        
+                        <div class="title">
+                            <img fallback-src ng-src="/{{plugin.name}}/public/image.png">
+                            <strong>{{plugin.name}}</strong>
+                        </div>
+                        <p class="description">Here goes the description...</p>
                     </a>
                 </li>
             </ul>
@@ -70,6 +74,7 @@
         <script type="text/javascript" src="bower_components/angular-gravatar/build/md5.js"></script>
         <script type="text/javascript" src="bower_components/angular-gravatar/build/angular-gravatar.js"></script>		        
         <script type="text/javascript" src="bower_components/angular-gridster/src/angular-gridster.js"></script>		
+        <script type="text/javascript" src="bower_components/angular-img-fallback/angular.dcb-img-fallback.min.js"></script>
         
         <script type="text/javascript" src="wb.js"></script>
 
