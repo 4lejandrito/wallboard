@@ -19,10 +19,39 @@ ul, ol {
     list-style: none;
 }
 
+.wallboard {
+    height: 100% !important;
+}
+
+.wb-bootstrap {    
+    text-align: center;
+    padding-top: 5%;    
+    width: 70%;
+    margin: 0 auto;
+    color: #666666;
+}
+
+.wb-bootstrap h1 {
+    font-size: 4rem;
+    margin-bottom: 3rem;
+}
+
+.wb-bootstrap h2 {
+    font-size: 3rem;
+}
+
+.wb-bootstrap h1, .wb-bootstrap h2 {        
+    color: #666666;
+}
+
+.wb-bootstrap i {    
+    margin-top: 30px;
+    font-size: 80px;
+}
+
 .wb-grid {
     position: static;
     margin: 0 auto;   
-    height: 100% !important;
 }
 
 .wb-grid li[gridster-item], .wb-grid ul[ng-show="widgets"] {
