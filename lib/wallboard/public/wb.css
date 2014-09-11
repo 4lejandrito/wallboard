@@ -11,6 +11,10 @@ body {
     color: #666666;
 }
 
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Open Sans', sans-serif !important;
+}
+
 ul, ol {
     list-style: none;
 }
@@ -18,6 +22,7 @@ ul, ol {
 .wb-grid {
     position: static;
     margin: 0 auto;   
+    height: 100% !important;
 }
 
 .wb-grid li[gridster-item], .wb-grid ul[ng-show="widgets"] {
@@ -51,7 +56,7 @@ ul, ol {
     margin-bottom: 4.5rem;
 }
 
-.wb-w-loading, .wb-w-settings{    
+.wb-w-loading, .wb-w-settings {    
     text-align: center;
     margin: 0 auto 0 auto;
     width: 100%;
@@ -63,6 +68,30 @@ ul, ol {
 .wb-w-loading h1 {
     color: #666666;
     margin: 0;
+}
+
+.available {    
+    padding: 21px;
+    background-color: rgba(255,255,255, .9);
+}
+
+.available h2 {
+    color: #1b1b24;
+    margin-bottom: 20px;
+}
+
+.available li a {
+    height: 5rem;
+    display: block;
+    text-align: left;
+    background: #1b1b24;
+    cursor: pointer;    
+    padding: 10px;
+    color: white;
+}
+
+.available li a:hover {
+    opacity: .9;
 }
 
 footer {    

@@ -60,8 +60,8 @@ describe Wallboard::API do
 
     describe "POST /plugin" do
         it "creates plugins" do
-            expect(app.settings.pm).to receive(:create).with("whatever").and_return(Wallboard::Plugin.new('some_uuid', 'test-plugin'))
-            post '/plugin', :name => 'whatever'
+            expect(app.settings.pm).to receive(:create).with("whatever").and_return(Wallboard::Plugin.new('some_uuid', 'test-plugin'))            
+            post '/plugin', {:name => 'whatever'}.to_json, { 'CONTENT_TYPE' => 'application/json'}
             expect(last_response.headers['Content-Type']).to eq('application/json')       
             expect(last_response.body).to eq({
                 "id" => "some_uuid",
@@ -73,7 +73,7 @@ describe Wallboard::API do
 
         it "returns an error if we try to create a non available plugin" do       
             expect(app.settings.pm).to receive(:create).with("whatever").and_return(nil)
-            post '/plugin', :name => 'whatever'
+            post '/plugin', {:name => 'whatever'}.to_json, { 'CONTENT_TYPE' => 'application/json'}
             expect(last_response.status).to eq(400)
         end
     end
