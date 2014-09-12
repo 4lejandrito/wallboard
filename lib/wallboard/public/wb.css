@@ -19,8 +19,14 @@ ul, ol {
     list-style: none;
 }
 
-.wallboard {
-    height: 100% !important;
+#wallboard {
+    min-height: 100% !important;
+}
+
+#backpanel {
+    /* min-height: 85%; */
+    padding: 21px;    
+    background-color: rgba(255,255,255, .9);
 }
 
 .wb-bootstrap {    
@@ -45,7 +51,7 @@ ul, ol {
 }
 
 .wb-bootstrap i {    
-    margin-top: 30px;
+    margin-top: 20px;
     font-size: 80px;
 }
 
@@ -97,11 +103,6 @@ ul, ol {
 .wb-w-loading h1 {
     color: #666666;
     margin: 0;
-}
-
-.available {    
-    padding: 21px;
-    background-color: rgba(255,255,255, .9);
 }
 
 .available h2 {
