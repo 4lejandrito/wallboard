@@ -6,6 +6,7 @@
 .wb-widget-heroes table {
     width: 100%;
     border: none;
+    background: none;
 }
 
 .wb-widget-heroes table tr:nth-of-type(even) {

@@ -26,136 +26,140 @@ ul, ol {
 
 #wallboard {
     min-height: 100% !important;
+    
+    .wb-bootstrap {    
+        text-align: center;
+        padding-top: 5%;    
+        width: 70%;
+        margin: 0 auto;
+        color: @wb-color-b;
+
+        h1 {
+            font-size: 4rem;
+            margin-bottom: 3rem;
+        }
+
+        h2 {
+            font-size: 3rem;
+        }
+        
+        h1, h2 {        
+            color: @wb-color-b;
+        }
+        
+        i {    
+            margin-top: 20px;
+            font-size: 80px;
+        }
+    }    
+
+    .wb-grid {
+        position: static;
+        margin: 0 auto;   
+        
+        li[gridster-item], ul[ng-show="widgets"] {
+            margin: 0;
+            padding: 0;
+        }
+        
+        li[gridster-item] {
+            text-align: left;
+            background-color: @wb-color-c;
+            cursor: pointer;    
+            padding: 10px;
+            
+            .delete {  
+                display: none;
+                position: absolute;
+                top: -15px;
+                right: -15px;
+                background-color: black;
+                border-radius: 50%;
+                width: 30px;
+                height: 30px;    
+                text-align: center;
+                border: solid 2px white;
+                color: white;
+            }
+        
+            &:hover .delete {
+                display: inline;    
+            }
+        }
+    }
+
+    .wb-widget {
+        height: 100%;
+        overflow: auto;
+    }
+
+    .wb-loading {
+        text-align: center;
+        margin-top: 10%;
+        position: absolute;
+        width: 100%;
+        font-size: 4rem;
+        color: @wb-color-b;
+    }
+
+    .wb-loading div {    
+        margin-top: 3.5rem;
+        margin-bottom: 4.5rem;
+    }
+
+    .wb-w-loading, .wb-w-settings {    
+        text-align: center;
+        margin: 0 auto 0 auto;
+        width: 100%;
+        position: relative;
+        top: 10%;
+        font-size: 2rem;
+    }
+
+    .wb-w-loading h1 {
+        color: @wb-color-b;
+        margin: 0;
+    }
 }
 
 #backpanel {
     /* min-height: 85%; */
     padding: 21px;    
     background-color: @wb-color-c;
-}
+    
+    .available {
+        h2 {
+            color: @wb-color;
+            margin-bottom: 20px;
+        }
 
-.wb-bootstrap {    
-    text-align: center;
-    padding-top: 5%;    
-    width: 70%;
-    margin: 0 auto;
-    color: @wb-color-b;
-}
+        li {
+            a {   
+                min-height: 150px;
+                display: block;
+                text-align: left;
+                background: @wb-color;
+                cursor: pointer;    
+                padding: 15px;
+                color: white;
+                font-size: 25px;
+                
+                &:hover {
+                    opacity: .9;
+                }
 
-.wb-bootstrap h1 {
-    font-size: 4rem;
-    margin-bottom: 3rem;
-}
+                .title {    
+                    margin-bottom: 10px;
+                    height: 3rem;
+                }
 
-.wb-bootstrap h2 {
-    font-size: 3rem;
-}
-
-.wb-bootstrap h1, .wb-bootstrap h2 {        
-    color: @wb-color-b;
-}
-
-.wb-bootstrap i {    
-    margin-top: 20px;
-    font-size: 80px;
-}
-
-.wb-grid {
-    position: static;
-    margin: 0 auto;   
-}
-
-.wb-grid li[gridster-item], .wb-grid ul[ng-show="widgets"] {
-    margin: 0;
-    padding: 0;
-}
-
-.wb-grid li[gridster-item] {
-    text-align: left;
-    background-color: @wb-color-c;
-    cursor: pointer;    
-    padding: 10px;
-}
-
-.wb-widget {
-    height: 100%;
-    overflow: auto;
-}
-
-.wb-loading {
-    text-align: center;
-    margin-top: 10%;
-    position: absolute;
-    width: 100%;
-    font-size: 4rem;
-    color: @wb-color-b;
-}
-
-.wb-loading div {    
-    margin-top: 3.5rem;
-    margin-bottom: 4.5rem;
-}
-
-.wb-w-loading, .wb-w-settings {    
-    text-align: center;
-    margin: 0 auto 0 auto;
-    width: 100%;
-    position: relative;
-    top: 10%;
-    font-size: 2rem;
-}
-
-.wb-w-loading h1 {
-    color: @wb-color-b;
-    margin: 0;
-}
-
-.wb-grid li[gridster-item] .delete {  
-    display: none;
-    position: absolute;
-    top: -15px;
-    right: -15px;
-    background-color: black;
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;    
-    text-align: center;
-    border: solid 2px white;
-    color: white;
-}
-
-.wb-grid li[gridster-item]:hover .delete {
-    display: inline;    
-}
-
-.available h2 {
-    color: @wb-color;
-    margin-bottom: 20px;
-}
-
-.available li a {   
-    min-height: 150px;
-    display: block;
-    text-align: left;
-    background: @wb-color;
-    cursor: pointer;    
-    padding: 15px;
-    color: white;
-    font-size: 25px;
-}
-
-.available li a:hover {
-    opacity: .9;
-}
-
-.available li a .title {    
-    margin-bottom: 10px;
-    height: 3rem;
-}
-
-.available li a img {   
-    height: 100%;    
-    float: right;
+                img {   
+                    height: 100%;    
+                    float: right;
+                }
+            }
+        }
+    }
 }
 
 footer {    
@@ -165,13 +169,8 @@ footer {
     padding: 10px 0;
     width: 100%;            
     opacity: .5;
-}
-
-footer h3 {
-    color: white;
-}
-
-table {
-    background: none;
-}
     
+    h3 {
+        color: white;
+    }
+}    
