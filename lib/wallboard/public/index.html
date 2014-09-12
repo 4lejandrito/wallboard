@@ -49,6 +49,8 @@
                              class="wb-widget wb-widget-{{widget.name}}"
                              ng-include="widget.name + '/public/index.html'">
                         </div>
+                        
+                        <a class="delete" ng-click="deleteWidget(widget)"><i class="fa fa-times"></i></a>                        
 
                         <div class="wb-w-settings" ng-show="!widget.config">
                             <strong>{{widget.name}}</strong> widget!<br><a href="settings"><i class="fa fa-cog"></i> Set up</a>
