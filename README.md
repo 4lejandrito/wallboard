@@ -13,10 +13,10 @@ You will need the following pre-requisites on your system before you can run:
 
 Once you have checked the code out, run the following command:
 ```
-bundler install
+bundler install && bower install
 ```
 
-This will install all of the required gems needed for the wallboard.
+This will install all of the required packages (backend and frontend) needed for the wallboard.
 
 Running Tests
 -------------
