@@ -16,12 +16,16 @@ module Wallboard
 
         assets do
             serve '/plugins', :from => 'plugins'
-
+            serve '/public', :from => 'public'   
+                
             js :plugins, [
                 '/plugins/*/public/widget.js'
             ]
             css :plugins, [
                 '/plugins/*/public/styles.css'
+            ]
+            css :wallboard, [
+                '/public/wb.css'
             ]
         end
 
