@@ -12,8 +12,9 @@ You will need the following pre-requisites on your system before you can run:
 * Bundler >= 1.2.0 - http://bundler.io/
 
 Once you have checked the code out, run the following command:
-
-```bundler install```
+```
+bundler install
+```
 
 This will install all of the required gems needed for the wallboard.
 
@@ -28,5 +29,6 @@ Running
 -------
 
 Wallboard is a [Sinatra](http://www.sinatrarb.com/) app, so it can be run through [Rack](http://rack.github.io/):
-
-```rackup```
+```
+rackup
+```
