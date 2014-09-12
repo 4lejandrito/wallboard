@@ -1,18 +1,23 @@
 @import url(http://fonts.googleapis.com/css?family=Lobster);
 @import url(http://fonts.googleapis.com/css?family=Open+Sans);
 
+@wb-color: #1b1b24;
+@wb-color-b: #666666;
+@wb-color-c: rgba(255,255,255, .9);
+@wb-font-family: 'Open Sans', sans-serif;
+
 body {
     padding: 0;
     margin: 0;
-    background: #1b1b24;
+    background: @wb-color;
     -webkit-font-smoothing: antialiased;
-    font-family: 'Open Sans', sans-serif;
+    font-family: @wb-font-family;
     font-size: x-small;
-    color: #666666;
+    color: @wb-color-b;
 }
 
 h1, h2, h3, h4, h5, h6 {
-    font-family: 'Open Sans', sans-serif !important;
+    font-family: @wb-font-family !important;
 }
 
 ul, ol {
@@ -26,7 +31,7 @@ ul, ol {
 #backpanel {
     /* min-height: 85%; */
     padding: 21px;    
-    background-color: rgba(255,255,255, .9);
+    background-color: @wb-color-c;
 }
 
 .wb-bootstrap {    
@@ -34,7 +39,7 @@ ul, ol {
     padding-top: 5%;    
     width: 70%;
     margin: 0 auto;
-    color: #666666;
+    color: @wb-color-b;
 }
 
 .wb-bootstrap h1 {
@@ -47,7 +52,7 @@ ul, ol {
 }
 
 .wb-bootstrap h1, .wb-bootstrap h2 {        
-    color: #666666;
+    color: @wb-color-b;
 }
 
 .wb-bootstrap i {    
@@ -67,7 +72,7 @@ ul, ol {
 
 .wb-grid li[gridster-item] {
     text-align: left;
-    background-color: rgba(255,255,255, .9);
+    background-color: @wb-color-c;
     cursor: pointer;    
     padding: 10px;
 }
@@ -83,7 +88,7 @@ ul, ol {
     position: absolute;
     width: 100%;
     font-size: 4rem;
-    color: #666666;
+    color: @wb-color-b;
 }
 
 .wb-loading div {    
@@ -101,7 +106,7 @@ ul, ol {
 }
 
 .wb-w-loading h1 {
-    color: #666666;
+    color: @wb-color-b;
     margin: 0;
 }
 
@@ -124,7 +129,7 @@ ul, ol {
 }
 
 .available h2 {
-    color: #1b1b24;
+    color: @wb-color;
     margin-bottom: 20px;
 }
 
@@ -132,7 +137,7 @@ ul, ol {
     min-height: 150px;
     display: block;
     text-align: left;
-    background: #1b1b24;
+    background: @wb-color;
     cursor: pointer;    
     padding: 15px;
     color: white;
