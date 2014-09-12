@@ -23,7 +23,10 @@ Running Tests
 
 The tests are written using [RSpec](http://rspec.info).
 
-Simply run the commnand ```rspec``` on the project's root folder.
+Simply run the following command on the project's root folder:
+```
+rspec
+```
 
 Running
 -------
