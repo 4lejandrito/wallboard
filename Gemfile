@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby ENV['CUSTOM_RUBY_VERSION'] || '2.0.0'
+ruby '2.1.2'
 
 gem 'sinatra'
 gem 'sinatra-contrib'
