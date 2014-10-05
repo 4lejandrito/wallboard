@@ -15,45 +15,45 @@
         
         <div id="wallboard">
             
-            <div class="wb-loading" ng-show="!widgets">
+            <div class="wb-loading" ng-show="!plugins">
                 <i class="fa fa-th"></i>
                 <div>Loading <strong>Wallboard</strong></div>
                 <i class="fa fa-spin fa-circle-o-notch"></i>
             </div>
             
-            <div class="wb-bootstrap" ng-show="widgets.length == 0">
+            <div class="wb-bootstrap" ng-show="plugins.enabled.length == 0">
                 <i class="fa fa-th"></i>
                 <h1>Welcome to <strong>Wallboard</strong></h1>
                 <h2>Scroll down to get started!</h2>
                 <i class="fa fa-angle-down"></i>
             </div>
             
-            <div ng-show="widgets.length > 0" gridster="gridsterOpts" class="wb-grid">
+            <div ng-show="plugins.enabled.length > 0" gridster="gridsterOpts" class="wb-grid">
                 <ul>
                     <li
-                        ng-controller="widget"
+                        ng-controller="plugin"
                         gridster-item                    
-                        ng-repeat="widget in widgets"
-                        row="widget.layout.y"
-                        col="widget.layout.x"
-                        size-x="widget.layout.w"
-                        size-y="widget.layout.h">
+                        ng-repeat="plugin in plugins.enabled"
+                        row="plugin.layout.y"
+                        col="plugin.layout.x"
+                        size-x="plugin.layout.w"
+                        size-y="plugin.layout.h">
 
                         <div class="wb-w-loading" ng-show="loading">
                             <h1><i class="fa fa-th"></i></h1>
-                            <div>Loading <strong>{{widget.name}}</strong></div>
+                            <div>Loading <strong>{{plugin.name}}</strong></div>
                             <i class="fa fa-spin fa-circle-o-notch"></i>
                         </div>
 
-                        <div ng-show="!loading && widget.config"
-                             class="wb-widget wb-widget-{{widget.name}}"
-                             ng-include="widget.name + '/public/index.html'">
+                        <div ng-show="!loading && plugin.config"
+                             class="wb-plugin wb-plugin-{{plugin.name}}"
+                             ng-include="plugin.name + '/public/index.html'">
                         </div>
                         
-                        <a class="delete" ng-click="deleteWidget(widget)"><i class="fa fa-times"></i></a>                        
+                        <a class="delete" ng-click="deletePlugin(plugin)"><i class="fa fa-times"></i></a>                        
 
-                        <div class="wb-w-settings" ng-show="!widget.config">
-                            <strong>{{widget.name}}</strong> widget!<br><a href="settings"><i class="fa fa-cog"></i> Set up</a>
+                        <div class="wb-w-settings" ng-show="!plugin.config">
+                            <strong>{{plugin.name}}</strong> plugin!<br><a href="settings"><i class="fa fa-cog"></i> Set up</a>
                         </div>
                     </li>
                 </ul>            
@@ -62,10 +62,10 @@
         
         <div id="backpanel">
             <div class="available">
-                <h2><i class="fa fa-plus-square-o"></i> Add widgets</h2>
+                <h2><i class="fa fa-plus-square-o"></i> Add plugins</h2>
                 <ul class="small-block-grid-2 medium-block-grid-3 large-block-grid-4">  
-                    <li ng-repeat="plugin in plugins">                                                                
-                        <a href="" ng-click="addWidget(plugin)">                        
+                    <li ng-repeat="plugin in plugins.available">                                                                
+                        <a href="" ng-click="addPlugin(plugin)">                        
                             <div class="title">
                                 <img fallback-src ng-src="/{{plugin.name}}/public/image.png">
                                 <strong>{{plugin.name}}</strong>

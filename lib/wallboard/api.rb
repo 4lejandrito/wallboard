@@ -19,7 +19,7 @@ module Wallboard
             serve '/public', :from => 'public'   
                 
             js :plugins, [
-                '/plugins/*/public/widget.js'
+                '/plugins/*/public/plugin.js'
             ]
             css :plugins, [
                 '/plugins/*/public/styles.css'

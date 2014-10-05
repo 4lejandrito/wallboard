@@ -36,7 +36,7 @@ describe Wallboard::API do
             get '/builds/public/styles.css'
             expect(last_response.headers['Content-Type']).to eq('text/css;charset=utf-8')       
             expect(last_response.body).to eq('this is css')        
-            get '/builds/public/widget.js'        
+            get '/builds/public/plugin.js'        
             expect(last_response.headers['Content-Type']).to eq('application/javascript;charset=utf-8')       
             expect(last_response.body).to eq('this is js')        
         end

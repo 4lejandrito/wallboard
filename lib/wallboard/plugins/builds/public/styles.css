@@ -1,35 +1,35 @@
-.wb-widget-builds > div {    
+.wb-plugin-builds > div {    
     height: 100%;
 }
 
-.wb-widget-builds ul {
+.wb-plugin-builds ul {
     margin: 0 !important;
     height: 100%;
 }
 
-.wb-widget-builds .job {
+.wb-plugin-builds .job {
     padding: 10px;
 }
 
-.wb-widget-builds .job * {
+.wb-plugin-builds .job * {
     color: white !important;
 }
 
-.wb-widget-builds .job > div {  
+.wb-plugin-builds .job > div {  
     overflow: hidden;
     padding: 10px;
     margin: 0;
     height: 100%;
 }
 
-.wb-widget-builds .job h4 {
+.wb-plugin-builds .job h4 {
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
     margin-bottom: 10px;    
 }
 
-.wb-widget-builds .job h5 {
+.wb-plugin-builds .job h5 {
     overflow: hidden;
     text-overflow: ellipsis;
     -moz-white-space: nowrap;
@@ -38,15 +38,15 @@
    -webkit-box-orient: vertical;   
 }
 
-.wb-widget-builds .job .th {
+.wb-plugin-builds .job .th {
     margin-right: 5px;
     border-width: 2px;
 }
 
-.wb-widget-builds .job img {
+.wb-plugin-builds .job img {
     width: 24px;
 }
 
-.wb-widget-builds .job .authors {
+.wb-plugin-builds .job .authors {
     margin-bottom: 10px;    
 }
