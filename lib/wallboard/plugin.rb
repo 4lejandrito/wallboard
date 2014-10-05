@@ -8,5 +8,11 @@ module Wallboard
             @config = {}
             @layout = {}
         end
+
+        def onmessage(&blk); @onmessage = blk; end
+
+        def message(message)
+            @onmessage.call(message) if defined? @onmessage
+        end
     end
 end
