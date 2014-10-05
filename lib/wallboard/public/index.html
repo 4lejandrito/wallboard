@@ -11,7 +11,7 @@
         <%= css :wallboard %>
         <%= css :plugins %>
 	</head>
-	<body ng-app="wb" ng-controller="wb">		    
+	<body ng-app="wb" ng-controller="wallboard">		    
         
         <div id="wallboard">
             
@@ -94,10 +94,7 @@
             angular.module('wb', ['ui.gravatar', 'gridster', 'dcbImgFallback']);
         </script>
         
-        <script type="text/javascript" src="js/server.js"></script>
-        <script type="text/javascript" src="js/widget.js"></script>
-        <script type="text/javascript" src="js/wallboard.js"></script>
-        
+        <%= js :wallboard %>        
         <%= js :plugins %>
 
 	</body>

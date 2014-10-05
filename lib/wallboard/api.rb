@@ -24,6 +24,9 @@ module Wallboard
             css :plugins, [
                 '/plugins/*/public/styles.css'
             ]
+            js :wallboard, [
+                '/public/js/*.js'
+            ]
             css :wallboard, [
                 '/public/wb.css'
             ]
