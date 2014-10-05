@@ -89,9 +89,15 @@
         <script type="text/javascript" src="bower_components/angular-gravatar/build/angular-gravatar.js"></script>		        
         <script type="text/javascript" src="bower_components/angular-gridster/src/angular-gridster.js"></script>		
         <script type="text/javascript" src="bower_components/angular-img-fallback/angular.dcb-img-fallback.min.js"></script>
+                
+        <script type="text/javascript">
+            angular.module('wb', ['ui.gravatar', 'gridster', 'dcbImgFallback']);
+        </script>
         
-        <script type="text/javascript" src="wb.js"></script>
-
+        <script type="text/javascript" src="js/server.js"></script>
+        <script type="text/javascript" src="js/widget.js"></script>
+        <script type="text/javascript" src="js/wallboard.js"></script>
+        
         <%= js :plugins %>
 
 	</body>
