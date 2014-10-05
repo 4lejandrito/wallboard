@@ -11,7 +11,7 @@ describe Wallboard::WSHandler do
         @unit = Wallboard::WSHandler.new(@plugin, @ws)
     end
 
-    it "calls plugin get on websocket open and send the result back" do
+    it "calls plugin get on websocket open and send the result back in json" do
         expect(@plugin).to receive(:get).and_return({:key => 'value'})
         expect(@ws).to receive(:send).with('{"key":"value"}')
         @ws.trigger_on_open();
