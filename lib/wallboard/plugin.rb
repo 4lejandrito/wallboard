@@ -14,5 +14,9 @@ module Wallboard
         def message(message)
             @onmessage.call(message) if defined? @onmessage
         end
+
+        def get
+            return {}
+        end
     end
 end
