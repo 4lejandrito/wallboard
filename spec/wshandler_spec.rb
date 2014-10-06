@@ -22,6 +22,11 @@ describe Wallboard::WSHandler do
         @ws.trigger_on_message('{"key":"value"}');
     end
 
+    it "calls plugin message on websocket message using the same value if not valid json" do
+        expect(@plugin).to receive(:message).with('Some invalid json')
+        @ws.trigger_on_message('Some invalid json');
+    end
+
     it "sends the message triggered by the plugin through the websocket in json" do
         expect(@ws).to receive(:send).with('{"key":"value"}')
         @plugin.message({:key => 'value'})

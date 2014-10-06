@@ -11,7 +11,11 @@ module Wallboard
                 ws.send(::MultiJson.dump plugin.get())
             end
             ws.onmessage do |msg|
-                plugin.message(::MultiJson.load msg)
+                begin
+                    plugin.message(::MultiJson.load msg)
+                rescue MultiJson::ParseError => exception
+                    plugin.message(msg)
+                end
             end
         end
     end
