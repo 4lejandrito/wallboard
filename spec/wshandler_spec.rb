@@ -1,4 +1,5 @@
 require 'wallboard/wshandler'
+require 'wallboard/pluginmanager'
 require 'wallboard/plugin'
 require 'em-websocket'
 require 'rspec'
@@ -7,28 +8,18 @@ describe Wallboard::WSHandler do
 
     before do
         @ws = EventMachine::WebSocket::Connection.new({}, {})
-        @plugin = Wallboard::Plugin.new('some_id', 'some_name')
-        @unit = Wallboard::WSHandler.new(@plugin, @ws)
-    end
-
-    it "calls plugin get on websocket open and send the result back in json" do
-        expect(@plugin).to receive(:get).and_return({:key => 'value'})
-        expect(@ws).to receive(:send).with('{"key":"value"}')
-        @ws.trigger_on_open();
+        @pm = Wallboard::PluginManager.new(File.join(Dir.pwd, 'spec/plugins'))
+        allow(@pm).to receive(:enabled).and_return([Wallboard::Plugin.new('some_uuid', 'test-plugin')])
+        Wallboard::WSHandler.new(@pm, @ws).handle
     end
 
     it "calls plugin message on websocket message parsing the json" do
-        expect(@plugin).to receive(:message).with({'key' => 'value'})
-        @ws.trigger_on_message('{"key":"value"}');
-    end
-
-    it "calls plugin message on websocket message using the same value if not valid json" do
-        expect(@plugin).to receive(:message).with('Some invalid json')
-        @ws.trigger_on_message('Some invalid json');
+        expect(@pm.get('some_uuid')).to receive(:message).with({'key' => 'value'})
+        @ws.trigger_on_message('{"plugin": "some_uuid", "data": {"key": "value"}}');
     end
 
     it "sends the message triggered by the plugin through the websocket in json" do
-        expect(@ws).to receive(:send).with('{"key":"value"}')
-        @plugin.message({:key => 'value'})
+        expect(@ws).to receive(:send).with('{"plugin":"some_uuid","data":{"key":"value"}}')
+        @pm.get('some_uuid').send({:key => 'value'})
     end
 end

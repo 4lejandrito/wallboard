@@ -31,11 +31,15 @@ describe Wallboard::Plugin do
         expect(@unit.get()).to eq({})
     end
 
+    it "has a default message method" do
+        expect(@unit.message({})).to eq({})
+    end
+
     it "can send asynchronous messages" do
         expect(mock = double()).to receive(:callback).with('A message!!')
         @unit.onmessage do |msg|
             mock.callback(msg)
         end
-        @unit.message('A message!!')
+        @unit.send('A message!!')
     end
 end

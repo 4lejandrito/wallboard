@@ -4,22 +4,22 @@ require 'securerandom'
 module Wallboard
     class PluginManager
         attr_accessor :enabled, :available
-        
+
         def initialize(folder)
             @folder = folder
-            Dir.glob(folder + "/*/plugin.rb").each{|f| require_relative f}            
-            self.available = Dir.glob(@folder + '/*').map do |f| 
+            Dir.glob(folder + "/*/plugin.rb").each{|f| require_relative f}
+            self.available = Dir.glob(@folder + '/*').map do |f|
                 name = Pathname.new(f).basename.to_s
                 clazz = Plugin.name
-                begin  
+                begin
                     clazz = Object.const_get(name.capitalize())::Main.name
-                rescue NameError                
+                rescue NameError
                 end
                 {:name => name, :class => clazz}
             end
-            self.enabled = []            
+            self.enabled = []
         end
-        
+
         def create(name)
             template = self.geta(name)
             if (template)
@@ -28,15 +28,15 @@ module Wallboard
                 plugin
             end
         end
-        
+
         def geta(name)
             self.available.select { |p| p[:name] == name}[0]
         end
-        
+
         def get(id)
-            self.enabled.select { |p| p.id == id}[0]
+            self.enabled.select { |p| p.id == id}[0] or self.enabled.select { |p| p.name == id}[0]
         end
-        
+
         def delete(id)
             self.enabled.delete(self.enabled.select { |p| p.id == id}[0])
         end

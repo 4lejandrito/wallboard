@@ -11,12 +11,16 @@ module Wallboard
 
         def onmessage(&blk); @onmessage = blk; end
 
-        def message(message)
+        def send(message)
             @onmessage.call(message) if defined? @onmessage
         end
 
         def get
-            return {}
+            {}
+        end
+
+        def message(message)
+            message
         end
     end
 end

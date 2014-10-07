@@ -114,6 +114,18 @@ describe Wallboard::API do
         end
     end
 
+    describe "POST /plugin/:id" do
+       it 'sends a message to the plugin' do
+           plu = Wallboard::Plugin.new('some_uuid', 'test-plugin')
+           expect(app.settings.pm).to receive(:get).with("some_uuid").and_return(plu)
+           expect(plu).to receive(:message).with({'key'=> 'value'}).and_return({'key1'=> 'value1'})
+
+           post '/plugin/some_uuid', {'key'=> 'value'}.to_json, { 'CONTENT_TYPE' => 'application/json'}
+
+           expect(last_response.body).to eq({'key1'=> 'value1'}.to_json)
+        end
+    end
+
     describe "DELETE /plugin/:id" do
        it 'deletes an enabled plugin' do
            plu = Wallboard::Plugin.new('some_uuid', 'test-plugin')

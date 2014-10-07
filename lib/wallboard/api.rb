@@ -34,7 +34,13 @@ module Wallboard
         end
 
         get '/' do
-            erb File.read(File.join(settings.public_folder, 'index.html'))
+            if request.websocket?
+                request.websocket do |ws|
+                    Wallboard::WSHandler.new(settings.pm, ws).handle
+                end
+            else
+                erb File.read(File.join(settings.public_folder, 'index.html'))
+            end
         end
 
         get "/plugin" do
@@ -59,20 +65,18 @@ module Wallboard
             if plugin then json(plugin.layout = (JSON.parse request.body.read)) else status 404 end
         end
 
+        post "/plugin/:id" do
+            plugin = settings.pm.get(params[:id]);
+            if plugin then json(plugin.message(JSON.parse request.body.read)) else status 404 end
+        end
+
         delete "/plugin/:id" do
             if plugin = settings.pm.delete(params[:id]) then json(plugin) else status 404 end
         end
 
         get "/plugin/:id" do
             plugin = settings.pm.get(params[:id]);
-
-            if request.websocket?
-                request.websocket do |ws|
-                    Wallboard::WSHandler.new(plugin, ws)
-                end
-            else
-                json plugin.get()
-            end
+            json plugin.get()
         end
     end
 end
