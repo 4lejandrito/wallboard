@@ -14,10 +14,6 @@ describe Wallboard::API do
 
     before do
         app.set :plugins_folder, File.join(Dir.pwd, 'spec/plugins')
-        app.set :pm, double(
-            :enabled => [Wallboard::Plugin.new('some_uuid', 'test-plugin')],
-            :available => [{"name"=>"builds", "class"=>"Builds::Main"}, {"name"=>"heroes", "class"=>"Wallboard::Plugin"}]
-        )
     end
 
     describe "GET /" do
@@ -44,6 +40,11 @@ describe Wallboard::API do
 
     describe "GET /plugin" do
         it "returns the plugins" do
+            app.settings.pm.enabled = [Wallboard::Plugin.new('some_uuid', 'test-plugin')]
+            app.settings.pm.available = [
+                {"name"=>"builds", "class"=>"Builds::Main"},
+                {"name"=>"heroes", "class"=>"Wallboard::Plugin"}
+            ]
             get '/plugin'
             expect(last_response.headers['Content-Type']).to eq('application/json')
             plugins = JSON.parse(last_response.body)
