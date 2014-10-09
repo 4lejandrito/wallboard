@@ -7,7 +7,6 @@ module Wallboard
             @name = name
             @config = {}
             @layout = {}
-            @data = {}
         end
 
         def onmessage(&blk); @onmessage = blk; end
@@ -18,7 +17,7 @@ module Wallboard
         end
 
         def get
-            @data
+            @data or {}
         end
 
         def message(data)

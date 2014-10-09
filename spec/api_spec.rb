@@ -26,13 +26,13 @@ describe Wallboard::API do
 
     describe "GET /:plugin/public/:asset" do
         it "returns the plugin assets" do
-            get '/builds/public/index.html'
+            get '/plugin1/public/index.html'
             expect(last_response.headers['Content-Type']).to eq('text/html;charset=utf-8')
             expect(last_response.body).to eq('this is html')
-            get '/builds/public/styles.css'
+            get '/plugin1/public/styles.css'
             expect(last_response.headers['Content-Type']).to eq('text/css;charset=utf-8')
             expect(last_response.body).to eq('this is css')
-            get '/builds/public/plugin.js'
+            get '/plugin1/public/plugin.js'
             expect(last_response.headers['Content-Type']).to eq('application/javascript;charset=utf-8')
             expect(last_response.body).to eq('this is js')
         end

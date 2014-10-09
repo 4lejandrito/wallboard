@@ -8,15 +8,15 @@ describe Wallboard::PluginManager do
     end
 
     it "returns the plugins in the folder" do
-        expect(@pm.available).to include({:name => 'builds', :class => 'Builds::Main'})
-        expect(@pm.available).to include({:name => 'heroes', :class => 'Wallboard::Plugin'})
+        expect(@pm.available).to include({:name => 'plugin1', :class => 'Plugin1::Main'})
+        expect(@pm.available).to include({:name => 'plugin2', :class => 'Wallboard::Plugin'})
     end
 
     it "creates an instance of an available plugin" do
         expect(@pm.enabled).to eq([])
-        plugin = @pm.create 'builds'
-        expect(plugin).to be_instance_of(Builds::Main)
-        expect(plugin.name).to eq('builds')
+        plugin = @pm.create 'plugin1'
+        expect(plugin).to be_instance_of(Plugin1::Main)
+        expect(plugin.name).to eq('plugin1')
         expect(@pm.enabled.length).to eq(1)
         expect(@pm.enabled[0]).to be(plugin)
     end
@@ -29,19 +29,19 @@ describe Wallboard::PluginManager do
 
     it "gets a plugin by id" do
         expect(@pm.enabled).to eq([])
-        plugin = @pm.create 'builds'
+        plugin = @pm.create 'plugin1'
         expect(@pm.get(plugin.id)).to be(plugin)
     end
 
     it "gets a plugin by name" do
         expect(@pm.enabled).to eq([])
-        plugin = @pm.create 'builds'
-        expect(@pm.get('builds')).to be(plugin)
+        plugin = @pm.create 'plugin1'
+        expect(@pm.get('plugin1')).to be(plugin)
     end
 
     it "can remove an enabled plugin by id and return it" do
         expect(@pm.enabled).to eq([])
-        plugin = @pm.create 'builds'
+        plugin = @pm.create 'plugin1'
         deletedPlugin = @pm.delete plugin.id
         expect(@pm.enabled.length).to eq(0)
         expect(deletedPlugin).to eq(plugin)

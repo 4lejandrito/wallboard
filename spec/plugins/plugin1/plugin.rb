@@ -1,6 +1,6 @@
 require 'wallboard/plugin'
 
-module Builds
+module Plugin1
     class Main < Wallboard::Plugin   
     end
 end
