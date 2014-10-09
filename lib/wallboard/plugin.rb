@@ -13,7 +13,7 @@ module Wallboard
 
         def send(data)
             @onmessage.call(data) if defined? @onmessage
-            data
+            @data = data
         end
 
         def get
@@ -21,7 +21,7 @@ module Wallboard
         end
 
         def message(data)
-            send(@data = data)
+            send(data)
         end
     end
 end
