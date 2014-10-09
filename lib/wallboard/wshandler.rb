@@ -14,10 +14,13 @@ module Wallboard
                     @ws.send(::MultiJson.dump({:plugin => plugin.id, :data => msg}))
                 end
             end
-            @ws.onmessage do |msg|
-                message = ::MultiJson.load msg
+            @ws.on(:message) do |msg|
+                message = ::MultiJson.load msg.data
                 @pm.get(message["plugin"]).message(message["data"])
             end
+            @ws.on(:close) do |event| end
+
+            @ws.rack_response
         end
     end
 end

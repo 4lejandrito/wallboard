@@ -2,7 +2,7 @@ require 'sinatra/base'
 require 'sinatra/json'
 require 'sinatra/activerecord'
 require 'sinatra/assetpack'
-require 'sinatra-websocket'
+require 'faye/websocket'
 require 'wallboard/pluginmanager'
 require 'wallboard/wshandler'
 
@@ -14,6 +14,7 @@ module Wallboard
         end
 
         register Sinatra::AssetPack
+        Faye::WebSocket.load_adapter('thin')
 
         assets do
             serve '/plugins', :from => 'plugins'
@@ -34,10 +35,8 @@ module Wallboard
         end
 
         get '/' do
-            if request.websocket?
-                request.websocket do |ws|
-                    Wallboard::WSHandler.new(settings.pm, ws).handle
-                end
+            if Faye::WebSocket.websocket?(request.env)
+                Wallboard::WSHandler.new(settings.pm, Faye::WebSocket.new(request.env)).handle
             else
                 erb File.read(File.join(settings.public_folder, 'index.html'))
             end
