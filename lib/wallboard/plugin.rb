@@ -7,6 +7,7 @@ module Wallboard
             @name = name
             @config = {}
             @layout = {}
+            @data = {}
         end
 
         def onmessage(&blk); @onmessage = blk; end
@@ -17,11 +18,11 @@ module Wallboard
         end
 
         def get
-            {}
+            @data
         end
 
         def message(data)
-            send(data)
+            send(@data = data)
         end
     end
 end

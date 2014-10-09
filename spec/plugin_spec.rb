@@ -44,4 +44,18 @@ describe Wallboard::Plugin do
         end
         @unit.send('A message!!')
     end
+
+    it "can send asynchronous messages" do
+        expect(mock = double()).to receive(:callback).with('A message!!')
+        @unit.onmessage do |msg|
+            mock.callback(msg)
+        end
+        @unit.send('A message!!')
+    end
+
+    it "saves by default the last message received and returns it in get" do
+        mock = double()
+        @unit.message(mock)
+        expect(@unit.get()).to eq(mock)
+    end
 end
