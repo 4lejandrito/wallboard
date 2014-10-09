@@ -32,7 +32,9 @@ describe Wallboard::Plugin do
     end
 
     it "has a default message method" do
-        expect(@unit.message({})).to eq({})
+        mock = double()
+        expect(@unit).to receive(:send).with(mock).and_return(mock)
+        expect(@unit.message(mock)).to eq(mock)
     end
 
     it "can send asynchronous messages" do

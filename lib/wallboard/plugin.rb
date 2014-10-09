@@ -11,16 +11,17 @@ module Wallboard
 
         def onmessage(&blk); @onmessage = blk; end
 
-        def send(message)
-            @onmessage.call(message) if defined? @onmessage
+        def send(data)
+            @onmessage.call(data) if defined? @onmessage
+            data
         end
 
         def get
             {}
         end
 
-        def message(message)
-            message
+        def message(data)
+            send(data)
         end
     end
 end
