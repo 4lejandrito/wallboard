@@ -39,15 +39,7 @@ describe Wallboard::Plugin do
 
     it "can send asynchronous messages" do
         expect(mock = double()).to receive(:callback).with('A message!!')
-        @unit.onmessage do |msg|
-            mock.callback(msg)
-        end
-        @unit.send('A message!!')
-    end
-
-    it "can send asynchronous messages" do
-        expect(mock = double()).to receive(:callback).with('A message!!')
-        @unit.onmessage do |msg|
+        @unit.on :message do |msg|
             mock.callback(msg)
         end
         @unit.send('A message!!')

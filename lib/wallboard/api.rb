@@ -11,6 +11,7 @@ module Wallboard
         configure do
             set :plugins_folder, File.join(File.dirname(__FILE__), 'plugins')
             set :pm, PluginManager.new(settings.plugins_folder)
+            set :ws, Wallboard::WSHandler.new(settings.pm)
         end
 
         register Sinatra::AssetPack
@@ -36,7 +37,7 @@ module Wallboard
 
         get '/' do
             if Faye::WebSocket.websocket?(request.env)
-                Wallboard::WSHandler.new(settings.pm, Faye::WebSocket.new(request.env)).handle
+                settings.ws.handle(Faye::WebSocket.new(request.env))
             else
                 erb File.read(File.join(settings.public_folder, 'index.html'))
             end

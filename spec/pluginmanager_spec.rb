@@ -53,4 +53,16 @@ describe Wallboard::PluginManager do
         expect(@pm.enabled.length).to eq(0)
         expect(deletedPlugin).to eq(nil)
     end
+
+    it "broadcasts plugin messages" do
+        plugin = @pm.create 'plugin1'
+
+        expect(mock = double()).to receive(:callback).with({:plugin => plugin.id, :data => 'something'})
+
+        @pm.on :message do |msg|
+            mock.callback(msg)
+        end
+
+        plugin.send('something')
+    end
 end

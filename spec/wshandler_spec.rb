@@ -11,20 +11,30 @@ describe Wallboard::WSHandler do
     end
 
     before do
-        @ws = MockWS.new({})
         @pm = Wallboard::PluginManager.new(File.join(Dir.pwd, 'spec/plugins'))
-        allow(@pm).to receive(:enabled).and_return([Wallboard::Plugin.new('some_uuid', 'test-plugin')])
-        Wallboard::WSHandler.new(@pm, @ws).handle
+        @pm.create 'plugin1'
+        @unit = Wallboard::WSHandler.new(@pm)
+    end
+
+    after do
+        sleep 0.5
     end
 
     it "calls plugin message on websocket message parsing the json" do
-        expect(@pm.get('some_uuid')).to receive(:message).with({'key' => 'value'})
-        @ws.driver.emit(:message, double(:data => '{"plugin": "some_uuid", "data": {"key": "value"}}'))
-        sleep 0.2
+        @unit.handle(ws = MockWS.new({}))
+
+        expect(@pm.get('plugin1')).to receive(:message).with({'key' => 'value'})
+
+        ws.driver.emit(:message, double(:data => '{"plugin": "plugin1", "data": {"key": "value"}}'))
     end
 
-    it "sends the message triggered by the plugin through the websocket in json" do
-        expect(@ws).to receive(:send).with('{"plugin":"some_uuid","data":{"key":"value"}}')
-        @pm.get('some_uuid').send({:key => 'value'})
+    it "broadcasts the message triggered by the plugin through the websocket in json" do
+        @unit.handle(wsA = MockWS.new({}))
+        @unit.handle(wsB = MockWS.new({}))
+
+        expect(wsA).to receive(:send).with({:plugin => @pm.get('plugin1').id, :data => {:key => "value"}}.to_json)
+        expect(wsB).to receive(:send).with({:plugin => @pm.get('plugin1').id, :data => {:key => "value"}}.to_json)
+
+        @pm.get('plugin1').send({:key => 'value'})
     end
 end

@@ -1,5 +1,8 @@
+require "events"
+
 module Wallboard
     class Plugin
+        include Events::Emitter
         attr_accessor :name, :id, :config, :layout
 
         def initialize(id, name)
@@ -9,10 +12,8 @@ module Wallboard
             @layout = {}
         end
 
-        def onmessage(&blk); @onmessage = blk; end
-
         def send(data)
-            @onmessage.call(data) if defined? @onmessage
+            emit(:message, data)
             @data = data
         end
 

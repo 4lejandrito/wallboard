@@ -1,8 +1,11 @@
 require 'pathname'
 require 'securerandom'
+require 'events'
 
 module Wallboard
     class PluginManager
+        include Events::Emitter
+
         attr_accessor :enabled, :available
 
         def initialize(folder)
@@ -25,6 +28,11 @@ module Wallboard
             if (template)
                 plugin = template[:class].split('::').inject(Object) {|o,c| o.const_get c}.new(SecureRandom.uuid, name)
                 self.enabled << plugin
+
+                plugin.on :message do |data|
+                    emit(:message, {:plugin => plugin.id, :data => data})
+                end
+
                 plugin
             end
         end
