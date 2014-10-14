@@ -24,7 +24,7 @@ module Wallboard
         end
 
         def create(name)
-            template = self.geta(name)
+            template = getTemplate(name)
             if (template)
                 plugin = template[:class].split('::').inject(Object) {|o,c| o.const_get c}.new(SecureRandom.uuid, name)
                 self.enabled << plugin
@@ -33,12 +33,10 @@ module Wallboard
                     emit(:message, {:plugin => plugin.id, :data => data})
                 end
 
+                emit(:message, self)
+
                 plugin
             end
-        end
-
-        def geta(name)
-            self.available.select { |p| p[:name] == name}[0]
         end
 
         def get(id)
@@ -46,7 +44,20 @@ module Wallboard
         end
 
         def delete(id)
-            self.enabled.delete(self.enabled.select { |p| p.id == id}[0])
+            plugin = self.enabled.delete(self.enabled.select { |p| p.id == id}[0])
+            emit(:message, self)
+            plugin
+        end
+
+        def update(plugins)
+            plugins.each {|p| get(p['id']).layout = p['layout']}
+            emit(:message, self)
+        end
+
+        private
+
+        def getTemplate(name)
+          self.available.select { |p| p[:name] == name}[0]
         end
     end
 end

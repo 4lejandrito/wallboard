@@ -2,7 +2,6 @@ require 'sinatra/base'
 require 'sinatra/json'
 require 'sinatra/activerecord'
 require 'sinatra/assetpack'
-require 'faye/websocket'
 require 'wallboard/pluginmanager'
 require 'wallboard/wshandler'
 
@@ -15,7 +14,6 @@ module Wallboard
         end
 
         register Sinatra::AssetPack
-        Faye::WebSocket.load_adapter('thin')
 
         assets do
             serve '/plugins', :from => 'plugins'
@@ -36,11 +34,7 @@ module Wallboard
         end
 
         get '/' do
-            if Faye::WebSocket.websocket?(request.env)
-                settings.ws.handle(Faye::WebSocket.new(request.env))
-            else
-                erb File.read(File.join(settings.public_folder, 'index.html'))
-            end
+            settings.ws.handle(request) or erb File.read(File.join(settings.public_folder, 'index.html'))
         end
 
         get "/plugin" do
@@ -51,6 +45,11 @@ module Wallboard
             if plugin = settings.pm.create((JSON.parse request.body.read)['name']) then json(plugin) else status 400 end
         end
 
+        put "/plugin" do
+            settings.pm.update(JSON.parse request.body.read)
+            settings.pm
+        end
+
         get "/:plugin/public/:file" do
             send_file File.join(settings.plugins_folder, params[:plugin], 'public', params[:file])
         end
@@ -58,11 +57,6 @@ module Wallboard
         post "/plugin/:id/config" do
             plugin = settings.pm.get(params[:id]);
             if plugin then json(plugin.config = (JSON.parse request.body.read)) else status 404 end
-        end
-
-        post "/plugin/:id/layout" do
-            plugin = settings.pm.get(params[:id]);
-            if plugin then json(plugin.layout = (JSON.parse request.body.read)) else status 404 end
         end
 
         post "/plugin/:id" do

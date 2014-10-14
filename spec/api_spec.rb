@@ -22,6 +22,13 @@ describe Wallboard::API do
             expect(last_response.headers['Content-Type']).to eq('text/html;charset=utf-8')
             expect(last_response.body).to include('<title>Wallboard</title>')
         end
+
+        it "process a potential websocket request" do
+          allow(app.settings.ws).to receive(:handle).and_return('Something')
+          get '/'
+          expect(app.settings.ws).to have_received(:handle).with(kind_of(Rack::Request))
+          expect(last_response.body).to eq('Something')
+        end
     end
 
     describe "GET /:plugin/public/:asset" do
@@ -79,6 +86,13 @@ describe Wallboard::API do
         end
     end
 
+    describe "PUT /plugin" do
+      it 'updates the plugins' do
+        expect(app.settings.pm).to receive(:update).with([{'id' => 'some_uuid', 'layout' => {'x' => 0, 'y' => 0, 'w' => 10, 'h' => 10}}])
+        put '/plugin', [{:id => 'some_uuid', :layout => {'x' => 0, 'y' => 0, 'w' => 10, 'h' => 10}}].to_json, { 'CONTENT_TYPE' => 'application/json'}
+      end
+    end
+
     describe "POST /plugin/:id/config" do
        it 'stores config into the plugin' do
            plu = Wallboard::Plugin.new('some_uuid', 'test-plugin')
@@ -92,25 +106,6 @@ describe Wallboard::API do
         it "returns an error if we try to modify a non enabled plugin" do
             expect(app.settings.pm).to receive(:get).with("some_uuid").and_return(nil)
             post '/plugin/some_uuid/config', {'key1'=>'value1', 'key2' => 'value2'}.to_json, { 'CONTENT_TYPE' => 'application/json'}
-            expect(last_response.status).to eq(404)
-        end
-    end
-
-    describe "POST /plugin/:id/layout" do
-       it 'stores layout into the plugin' do
-           plu = Wallboard::Plugin.new('some_uuid', 'test-plugin')
-           expect(app.settings.pm).to receive(:get).with("some_uuid").and_return(plu)
-           post '/plugin/some_uuid/layout', {'x'=>0, 'y' => 0, 'w' => 10, 'h' => 10}.to_json, { 'CONTENT_TYPE' => 'application/json'}
-           expect(plu.layout['x']).to eq(0)
-           expect(plu.layout['y']).to eq(0)
-           expect(plu.layout['w']).to eq(10)
-           expect(plu.layout['h']).to eq(10)
-           expect(last_response.body).to eq(plu.layout.to_json)
-        end
-
-        it "returns an error if we try to modify a non enabled plugin" do
-            expect(app.settings.pm).to receive(:get).with("whatever").and_return(nil)
-            post '/plugin/whatever/layout', {'x'=>0, 'y' => 0, 'w' => 10, 'h' => 10}.to_json, { 'CONTENT_TYPE' => 'application/json'}
             expect(last_response.status).to eq(404)
         end
     end

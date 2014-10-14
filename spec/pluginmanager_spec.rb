@@ -54,6 +54,40 @@ describe Wallboard::PluginManager do
         expect(deletedPlugin).to eq(nil)
     end
 
+    it "can update an array of plugins" do
+      plugin1 = @pm.create 'plugin1'
+      plugin2 = @pm.create 'plugin2'
+
+      @pm.update [
+          {'id' => plugin1.id, 'layout' => {'x'=>0, 'y' => 0, 'w' => 10, 'h' => 10}},
+          {'id' => plugin2.id, 'layout' => {'x'=>10, 'y' => 10, 'w' => 0, 'h' => 0}}
+      ]
+      expect(@pm.enabled[0].layout).to eq({'x'=>0, 'y' => 0, 'w' => 10, 'h' => 10})
+      expect(@pm.enabled[1].layout).to eq({'x'=>10, 'y' => 10, 'w' => 0, 'h' => 0})
+    end
+
+    it "broadcasts itself after creating, deleting and updating" do
+      mock = double()
+      @pm.on :message do |msg|
+        mock.callback(msg)
+      end
+
+      expect(mock).to receive(:callback).with(@pm)
+      plugin1 = @pm.create 'plugin1'
+
+      expect(mock).to receive(:callback).with(@pm)
+      plugin2 = @pm.create 'plugin2'
+
+      expect(mock).to receive(:callback).with(@pm)
+      @pm.update [
+          {'id' => plugin1.id, 'layout' => {'x'=>0, 'y' => 0, 'w' => 10, 'h' => 10}},
+          {'id' => plugin2.id, 'layout' => {'x'=>10, 'y' => 10, 'w' => 0, 'h' => 0}}
+      ]
+
+      expect(mock).to receive(:callback).with(@pm)
+      @pm.delete(plugin1.id);
+    end
+
     it "broadcasts plugin messages" do
         plugin = @pm.create 'plugin1'
 
