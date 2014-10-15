@@ -14,6 +14,8 @@ describe Wallboard::API do
 
     before do
         app.set :plugins_folder, File.join(Dir.pwd, 'spec/plugins')
+        app.disable :raise_errors
+        app.disable :show_exceptions
     end
 
     describe "GET /" do
@@ -80,7 +82,6 @@ describe Wallboard::API do
         end
 
         it "returns an error if we try to create a non available plugin" do
-            expect(app.settings.pm).to receive(:create).with("whatever").and_return(nil)
             post '/plugin', {:name => 'whatever'}.to_json, { 'CONTENT_TYPE' => 'application/json'}
             expect(last_response.status).to eq(400)
         end
@@ -104,9 +105,8 @@ describe Wallboard::API do
         end
 
         it "returns an error if we try to modify a non enabled plugin" do
-            expect(app.settings.pm).to receive(:get).with("some_uuid").and_return(nil)
-            post '/plugin/some_uuid/config', {'key1'=>'value1', 'key2' => 'value2'}.to_json, { 'CONTENT_TYPE' => 'application/json'}
-            expect(last_response.status).to eq(404)
+            post '/plugin/whatever/config', {'key1'=>'value1', 'key2' => 'value2'}.to_json, { 'CONTENT_TYPE' => 'application/json'}
+            expect(last_response.status).to eq(400)
         end
     end
 
@@ -123,9 +123,8 @@ describe Wallboard::API do
         end
 
         it "returns an error if we try to get a non available plugin" do
-            expect(app.settings.pm).to receive(:get).with("whatever").and_return(nil)
             get '/plugin/whatever'
-            expect(last_response.status).to eq(404)
+            expect(last_response.status).to eq(400)
         end
     end
 
@@ -148,9 +147,8 @@ describe Wallboard::API do
            delete '/plugin/some_uuid'
         end
         it "returns an error if we try to delete a non enabled plugin" do
-            expect(app.settings.pm).to receive(:delete).with("whatever").and_return(nil)
             delete '/plugin/whatever'
-            expect(last_response.status).to eq(404)
+            expect(last_response.status).to eq(400)
         end
     end
 end

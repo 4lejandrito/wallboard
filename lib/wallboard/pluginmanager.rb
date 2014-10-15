@@ -24,27 +24,26 @@ module Wallboard
         end
 
         def create(name)
-            template = getTemplate(name)
-            if (template)
-                plugin = template[:class].split('::').inject(Object) {|o,c| o.const_get c}.new(SecureRandom.uuid, name)
-                self.enabled << plugin
+            template = getTemplate(name) or not_found(name)
 
-                plugin.on :message do |data|
-                    emit(:message, {:plugin => plugin.id, :data => data})
-                end
+            plugin = template[:class].split('::').inject(Object) {|o,c| o.const_get c}.new(SecureRandom.uuid, name)
+            self.enabled << plugin
 
-                emit(:message, self)
-
-                plugin
+            plugin.on :message do |data|
+                emit(:message, {:plugin => plugin.id, :data => data})
             end
+
+            emit(:message, self)
+
+            plugin
         end
 
         def get(id)
-            self.enabled.select { |p| p.id == id}[0] or self.enabled.select { |p| p.name == id}[0]
+            self.enabled.select { |p| p.id == id}[0] or self.enabled.select { |p| p.name == id}[0] or not_found(id)
         end
 
         def delete(id)
-            plugin = self.enabled.delete(self.enabled.select { |p| p.id == id}[0])
+            plugin = self.enabled.delete(self.get(id))
             emit(:message, self)
             plugin
         end
@@ -58,6 +57,10 @@ module Wallboard
 
         def getTemplate(name)
           self.available.select { |p| p[:name] == name}[0]
+        end
+
+        def not_found(id)
+            raise "Plugin #{id} not found"
         end
     end
 end

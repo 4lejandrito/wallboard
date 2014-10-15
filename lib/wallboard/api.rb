@@ -38,39 +38,40 @@ module Wallboard
         end
 
         get "/plugin" do
-            json(settings.pm)
+            json settings.pm
         end
 
         post "/plugin" do
-            if plugin = settings.pm.create((JSON.parse request.body.read)['name']) then json(plugin) else status 400 end
+            json settings.pm.create((JSON.parse request.body.read)['name'])
         end
 
         put "/plugin" do
-            settings.pm.update(JSON.parse request.body.read)
-            settings.pm
+            json settings.pm.update(JSON.parse request.body.read)
         end
 
         get "/:plugin/public/:file" do
             send_file File.join(settings.plugins_folder, params[:plugin], 'public', params[:file])
         end
 
-        post "/plugin/:id/config" do
-            plugin = settings.pm.get(params[:id]);
-            if plugin then json(plugin.config = (JSON.parse request.body.read)) else status 404 end
+        get "/plugin/:id" do
+            json settings.pm.get(params[:id]).get();
         end
 
         post "/plugin/:id" do
-            plugin = settings.pm.get(params[:id]);
-            if plugin then json(plugin.message(JSON.parse request.body.read)) else status 404 end
+            json settings.pm.get(params[:id]).message(JSON.parse request.body.read)
         end
 
         delete "/plugin/:id" do
-            if plugin = settings.pm.delete(params[:id]) then json(plugin) else status 404 end
+            json settings.pm.delete(params[:id])
         end
 
-        get "/plugin/:id" do
-            plugin = settings.pm.get(params[:id]);
-            if plugin then json(plugin.get()) else status 404 end
+        post "/plugin/:id/config" do
+            json settings.pm.get(params[:id]).config = (JSON.parse request.body.read)
+        end
+
+        error do |error|
+            status 400
+            error.message
         end
     end
 end
