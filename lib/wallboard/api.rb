@@ -70,7 +70,7 @@ module Wallboard
 
         get "/plugin/:id" do
             plugin = settings.pm.get(params[:id]);
-            json plugin.get()
+            if plugin then json(plugin.get()) else status 404 end
         end
     end
 end

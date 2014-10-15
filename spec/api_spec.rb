@@ -110,6 +110,25 @@ describe Wallboard::API do
         end
     end
 
+    describe "GET /plugin/:id" do
+        it "returns the result of the plugin get method" do
+            plu = Wallboard::Plugin.new('some_uuid', 'test-plugin')
+            expect(app.settings.pm).to receive(:get).with("some_uuid").and_return(plu)
+            expect(plu).to receive(:get).and_return({:key => 'value'})
+            get '/plugin/some_uuid'
+            expect(last_response.headers['Content-Type']).to eq('application/json')
+            expect(last_response.body).to eq({
+                "key" => "value"
+            }.to_json)
+        end
+
+        it "returns an error if we try to get a non available plugin" do
+            expect(app.settings.pm).to receive(:get).with("whatever").and_return(nil)
+            get '/plugin/whatever'
+            expect(last_response.status).to eq(404)
+        end
+    end
+
     describe "POST /plugin/:id" do
        it 'sends a message to the plugin' do
            plu = Wallboard::Plugin.new('some_uuid', 'test-plugin')
