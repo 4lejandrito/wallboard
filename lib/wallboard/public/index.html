@@ -1,38 +1,37 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<title>Wallboard</title>
-		
-        <link rel="stylesheet" href="bower_components/foundation/css/normalize.css">
-        <link rel="stylesheet" href="bower_components/foundation/css/foundation.css">		
-        <link rel="stylesheet" href="bower_components/fontawesome/css/font-awesome.min.css">
-        <link rel="stylesheet" href="bower_components/jquery-ui/themes/base/all.css" />        
-        <link rel="stylesheet" href="bower_components/angular-gridster/dist/angular-gridster.min.css" />        		
+    <head>
+        <title>Wallboard</title>
+
+        <link rel="stylesheet" href="/bower_components/foundation/css/normalize.css">
+        <link rel="stylesheet" href="/bower_components/foundation/css/foundation.css">
+        <link rel="stylesheet" href="/bower_components/fontawesome/css/font-awesome.min.css">
+        <link rel="stylesheet" href="/bower_components/jquery-ui/themes/base/all.css" />
+        <link rel="stylesheet" href="/bower_components/angular-gridster/dist/angular-gridster.min.css" />
         <%= css :wallboard %>
-        <%= css :plugins %>
-	</head>
-	<body ng-app="wb" ng-controller="wallboard">		    
-        
+    </head>
+    <body ng-app="wb" ng-controller="wallboard">
+
         <div id="wallboard">
-            
+
             <div class="wb-loading" ng-show="!plugins">
                 <i class="fa fa-th"></i>
                 <div>Loading <strong>Wallboard</strong></div>
                 <i class="fa fa-spin fa-circle-o-notch"></i>
             </div>
-            
+
             <div class="wb-bootstrap" ng-show="plugins.enabled.length == 0">
                 <i class="fa fa-th"></i>
                 <h1>Welcome to <strong>Wallboard</strong></h1>
                 <h2>Scroll down to get started!</h2>
                 <i class="fa fa-angle-down"></i>
             </div>
-            
+
             <div ng-show="plugins.enabled.length > 0" gridster="gridsterOpts" class="wb-grid">
                 <ul>
                     <li
                         ng-controller="plugin"
-                        gridster-item                    
+                        gridster-item
                         ng-repeat="plugin in plugins.enabled"
                         row="plugin.layout.y"
                         col="plugin.layout.x"
@@ -47,27 +46,27 @@
 
                         <div ng-show="!loading && plugin.config"
                              class="wb-plugin wb-plugin-{{plugin.name}}"
-                             ng-include="plugin.name + '/public/index.html'">
+                             ng-include="'/assets/plugins/' + plugin.name + '/index.html'">
                         </div>
-                        
-                        <a class="delete" ng-click="deletePlugin(plugin)"><i class="fa fa-times"></i></a>                        
+
+                        <a class="delete" ng-click="deletePlugin(plugin)"><i class="fa fa-times"></i></a>
 
                         <div class="wb-w-settings" ng-show="!plugin.config">
                             <strong>{{plugin.name}}</strong> plugin!<br><a href="settings"><i class="fa fa-cog"></i> Set up</a>
                         </div>
                     </li>
-                </ul>            
+                </ul>
             </div>
-        </div>        
-        
+        </div>
+
         <div id="backpanel">
             <div class="available">
                 <h2><i class="fa fa-plus-square-o"></i> Add plugins</h2>
-                <ul class="small-block-grid-2 medium-block-grid-3 large-block-grid-4">  
-                    <li ng-repeat="plugin in plugins.available">                                                                
-                        <a href="" ng-click="addPlugin(plugin)">                        
+                <ul class="small-block-grid-2 medium-block-grid-3 large-block-grid-4">
+                    <li ng-repeat="plugin in plugins.available">
+                        <a href="" ng-click="addPlugin(plugin)">
                             <div class="title">
-                                <img fallback-src ng-src="/{{plugin.name}}/public/image.png">
+                                <img fallback-src ng-src="/assets/plugins/{{plugin.name}}/image.png">
                                 <strong>{{plugin.name}}</strong>
                             </div>
                             <p class="description">Here goes the description...</p>
@@ -75,28 +74,27 @@
                     </li>
                 </ul>
             </div>
-        </div>        
-        
+        </div>
+
         <footer>
             <h3><i class="fa fa-th"> </i> Wallboard</h3>
         </footer>
-        
-        <script type="text/javascript" src="bower_components/jquery/dist/jquery.js"></script>
-        <script type="text/javascript" src="bower_components/jquery-ui/jquery-ui.min.js"></script>
-        <script type="text/javascript" src="bower_components/javascript-detect-element-resize/jquery.resize.js"></script>
-        <script type="text/javascript" src="bower_components/angular/angular.min.js"></script>
-        <script type="text/javascript" src="bower_components/ng-lodash/build/ng-lodash.min.js"></script>
-        <script type="text/javascript" src="bower_components/angular-gravatar/build/md5.js"></script>
-        <script type="text/javascript" src="bower_components/angular-gravatar/build/angular-gravatar.js"></script>		        
-        <script type="text/javascript" src="bower_components/angular-gridster/src/angular-gridster.js"></script>		
-        <script type="text/javascript" src="bower_components/angular-img-fallback/angular.dcb-img-fallback.min.js"></script>
-                
+
+        <script type="text/javascript" src="/bower_components/jquery/dist/jquery.js"></script>
+        <script type="text/javascript" src="/bower_components/jquery-ui/jquery-ui.min.js"></script>
+        <script type="text/javascript" src="/bower_components/javascript-detect-element-resize/jquery.resize.js"></script>
+        <script type="text/javascript" src="/bower_components/angular/angular.min.js"></script>
+        <script type="text/javascript" src="/bower_components/ng-lodash/build/ng-lodash.min.js"></script>
+        <script type="text/javascript" src="/bower_components/angular-gravatar/build/md5.js"></script>
+        <script type="text/javascript" src="/bower_components/angular-gravatar/build/angular-gravatar.js"></script>
+        <script type="text/javascript" src="/bower_components/angular-gridster/src/angular-gridster.js"></script>
+        <script type="text/javascript" src="/bower_components/angular-img-fallback/angular.dcb-img-fallback.min.js"></script>
+
         <script type="text/javascript">
             angular.module('wb', ['ui.gravatar', 'gridster', 'ngLodash']);
         </script>
-        
-        <%= js :wallboard %>        
-        <%= js :plugins %>
 
-	</body>
+        <%= js :wallboard %>
+
+    </body>
 </html>
