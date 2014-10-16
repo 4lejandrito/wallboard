@@ -1,6 +1,6 @@
 <ul x-grid ng-click="addBuild()" class="small-block-grid-{{columns}}">
     <li class="job" style="height: {{100 / rows}}%;" ng-show="jobs" ng-repeat="job in (ojobs = (jobs|orderBy:'status':true)|limitTo:elems)">
-        <div class="alert-box radius {{['success', 'warning', 'alert'][job.status]}}">
+        <div class="alert-box {{['success', 'warning', 'alert'][job.status]}}">
             <h4>{{job.name}}</h4>
 
             <div class="authors">
@@ -11,6 +11,6 @@
         </div>
     </li>
     <li style="height: {{100 / rows}}%;" class="job" ng-show="jobs.length > elems">
-        <div class="alert-box radius {{['success', 'warning', 'alert'][ojobs[elems].status]}}"><h1>+{{jobs.length - elems}}</h1></div>
+        <div class="alert-box {{['success', 'warning', 'alert'][ojobs[elems].status]}}"><h1>+{{jobs.length - elems}}</h1></div>
     </li>
 </ul>
