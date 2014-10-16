@@ -16,7 +16,7 @@ module Wallboard
 
         def handle(request)
             if Faye::WebSocket.websocket?(request.env)
-              ws = Faye::WebSocket.new(request.env)
+              ws = Faye::WebSocket.new(request.env, nil, {:ping => 10})
 
               ws.on(:open) do |msg|
                   @clients << ws
