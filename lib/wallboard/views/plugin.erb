@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title><%=plugin.name%></title>
+
+        <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0, user-scalable=yes">
+
+        <link rel="stylesheet" href="/bower_components/foundation/css/normalize.css">
+        <link rel="stylesheet" href="/bower_components/foundation/css/foundation.css">
+        <link rel="stylesheet" href="/bower_components/fontawesome/css/font-awesome.min.css">
+
+        <%= css plugin.name.to_sym %>
+
+        <script>window.plugin = <%=plugin.to_json%>;</script>
+    </head>
+    <body ng-app="wb" ng-controller="plugin">
+        <div class="wb-loading" ng-show="loading">
+            <div><i class="fa fa-spin fa-circle-o-notch"></i> Loading <strong><%=plugin.name%></strong></div>
+        </div>
+
+        <div id="content" ng-show="!loading && plugin.config" ng-include="'/assets/plugins/<%=plugin.name%>/index.html'">
+        </div>
+
+        <div class="wb-w-settings" ng-show="!plugin.config">
+            <strong><%=plugin.name%></strong> plugin!<br><a href="settings"><i class="fa fa-cog"></i> Set up</a>
+        </div>
+
+        <script type="text/javascript" src="/bower_components/jquery/dist/jquery.js"></script>
+        <script type="text/javascript" src="/bower_components/angular/angular.min.js"></script>
+        <script type="text/javascript" src="/bower_components/ng-lodash/build/ng-lodash.min.js"></script>
+        <script type="text/javascript" src="/bower_components/angular-gravatar/build/md5.js"></script>
+        <script type="text/javascript" src="/bower_components/angular-gravatar/build/angular-gravatar.js"></script>
+        <script type="text/javascript" src="/bower_components/angular-img-fallback/angular.dcb-img-fallback.min.js"></script>
+
+        <script type="text/javascript">
+            angular.module('wb', ['ui.gravatar', 'ngLodash']);
+        </script>
+
+        <%= js :wallboard %>
+        <%= js plugin.name.to_sym %>
+    </body>
+</html>

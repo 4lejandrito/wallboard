@@ -1,0 +1,49 @@
+@import url(http://fonts.googleapis.com/css?family=Lobster);
+@import url(http://fonts.googleapis.com/css?family=Open+Sans);
+
+@wb-color: #1b1b24;
+@wb-color-b: #666666;
+@wb-color-c: rgba(255,255,255, .9);
+@wb-font-family: 'Open Sans', sans-serif;
+
+body, html, #content {
+    height: 100%;
+}
+
+body {
+    padding: 5px;
+    margin: 0;
+    background: @wb-color-c;
+    -webkit-font-smoothing: antialiased;
+    font-family: @wb-font-family;
+    font-size: x-small;
+    color: @wb-color-b;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: @wb-font-family !important;
+}
+
+ul, ol {
+    list-style: none;
+}
+
+body {
+    .wb-loading {
+        text-align: center;
+        top: 40%;
+        position: absolute;
+        width: 100%;
+        font-size: 5vw;
+        color: @wb-color-b;
+    }
+
+    .wb-w-loading, .wb-w-settings {
+        text-align: center;
+        margin: 0 auto 0 auto;
+        width: 100%;
+        position: relative;
+        top: 10%;
+        font-size: 2rem;
+    }
+}

@@ -17,19 +17,29 @@ module Wallboard
         register Sinatra::AssetPack
         register Sinatra::Namespace
 
+        pm = settings.pm
+
         namespace "/assets" do
             assets do
                 serve '/assets/plugins', :from => 'plugins'
                 serve '/assets/wallboard', :from => 'public'
 
                 js :wallboard, [
-                    '/assets/wallboard/js/*.js',
-                    '/assets/plugins/*/public/plugin.js'
+                    '/assets/wallboard/js/*.js'
                 ]
                 css :wallboard, [
-                    '/assets/wallboard/wb.css',
-                    '/assets/plugins/*/public/styles.css'
+                    '/assets/wallboard/wb.css'
                 ]
+
+                pm.available.each do |p|
+                    js p[:name].to_sym, [
+                        "/assets/plugins/#{p[:name]}/public/*.js"
+                    ]
+                    css p[:name].to_sym, [
+                        '/assets/wallboard/plugin.css',
+                        "/assets/plugins/#{p[:name]}/public/*.css"
+                    ]
+                end
             end
 
             get "/plugins/:plugin/:file" do
@@ -38,7 +48,11 @@ module Wallboard
         end
 
         get "/" do
-            erb File.read(File.join(settings.public_folder, 'index.html'))
+            erb :index
+        end
+
+        get "/plugin/:id" do
+            erb :plugin, :locals => {:plugin => settings.pm.get(params[:id])}
         end
 
         namespace "/api" do

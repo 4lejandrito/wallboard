@@ -30,7 +30,6 @@
             <div ng-show="plugins.enabled.length > 0" gridster="gridsterOpts" class="wb-grid">
                 <ul>
                     <li
-                        ng-controller="plugin"
                         gridster-item
                         ng-repeat="plugin in plugins.enabled"
                         row="plugin.layout.y"
@@ -38,18 +37,19 @@
                         size-x="plugin.layout.w"
                         size-y="plugin.layout.h">
 
-                        <div class="wb-w-loading" ng-show="loading">
-                            <h1><i class="fa fa-th"></i></h1>
-                            <div>Loading <strong>{{plugin.name}}</strong></div>
-                            <i class="fa fa-spin fa-circle-o-notch"></i>
+                        <iframe ng-show="!loading && plugin.config" class="wb-plugin"
+                             ng-src="{{'/plugin/' + plugin.id | trustAsResourceUrl}}">
+                        </iframe>
+
+                        <div ng-show="!loading && plugin.config" class="wb-plugin-over">
                         </div>
 
-                        <div ng-show="!loading && plugin.config"
-                             class="wb-plugin wb-plugin-{{plugin.name}}"
-                             ng-include="'/assets/plugins/' + plugin.name + '/index.html'">
-                        </div>
-
-                        <a class="delete" ng-click="deletePlugin(plugin)"><i class="fa fa-times"></i></a>
+                        <ul class="options">
+                            <li><a class="move"><i class="fa fa-arrows"></i></a></li>
+                            <li><a href="/plugin/{{plugin.id}}" target="_blank"><i class="fa fa-expand"></i></a></li>
+                            <li><a><i class="fa fa-wrench"></i></a></li>
+                            <li><a class="delete" ng-click="deletePlugin(plugin)"><i class="fa fa-trash-o"></i></a></li>
+                        </ul>
 
                         <div class="wb-w-settings" ng-show="!plugin.config">
                             <strong>{{plugin.name}}</strong> plugin!<br><a href="settings"><i class="fa fa-cog"></i> Set up</a>
