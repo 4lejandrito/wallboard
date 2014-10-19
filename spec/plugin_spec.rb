@@ -1,5 +1,6 @@
 require 'wallboard/plugin'
 require 'rspec'
+require 'rufus-scheduler'
 
 describe Wallboard::Plugin do
 
@@ -49,5 +50,22 @@ describe Wallboard::Plugin do
         mock = double()
         @unit.message(mock)
         expect(@unit.get()).to eq(mock)
+    end
+
+    it 'can schedule jobs at startup' do
+        expect(mock = double()).to receive(:callback).with(Rufus::Scheduler.singleton)
+
+        class TestPlugin < Wallboard::Plugin
+            def initialize(id, name, mock)
+                @mock = mock
+                super(id, name);
+            end
+
+            def schedule(scheduler)
+                @mock.callback(scheduler)
+            end
+        end
+
+        TestPlugin.new('id-123', 'name-123', mock)
     end
 end

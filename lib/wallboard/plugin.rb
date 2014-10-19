@@ -1,4 +1,5 @@
 require "events"
+require 'rufus-scheduler'
 
 module Wallboard
     class Plugin
@@ -10,6 +11,8 @@ module Wallboard
             @name = name
             @config = {}
             @layout = {}
+
+            schedule(Rufus::Scheduler.singleton)
         end
 
         def send(data)
@@ -23,6 +26,9 @@ module Wallboard
 
         def message(data)
             send(data)
+        end
+
+        def schedule(scheduler)
         end
     end
 end
