@@ -45,10 +45,10 @@
                         </div>
 
                         <ul class="options">
-                            <li><a class="move"><i class="fa fa-arrows"></i></a></li>
-                            <li><a href="/plugin/{{plugin.id}}" target="_blank"><i class="fa fa-expand"></i></a></li>
-                            <li><a><i class="fa fa-wrench"></i></a></li>
                             <li><a class="delete" ng-click="deletePlugin(plugin)"><i class="fa fa-trash-o"></i></a></li>
+                            <li><a><i class="fa fa-wrench"></i></a></li>
+                            <li><a href="/plugin/{{plugin.id}}" target="_blank"><i class="fa fa-expand"></i></a></li>
+                            <li><a class="move"><i class="fa fa-arrows"></i></a></li>
                         </ul>
 
                         <div class="wb-w-settings" ng-show="!plugin.config">
