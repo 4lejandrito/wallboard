@@ -66,7 +66,7 @@
                     <li ng-repeat="plugin in plugins.available">
                         <a href="" ng-click="addPlugin(plugin)">
                             <div class="title">
-                                <img fallback-src ng-src="/assets/plugins/{{plugin.name}}/image.png">
+                                <img onerror='this.style.display = "none"' ng-src="/assets/plugins/{{plugin.name}}/image.png">
                                 <strong>{{plugin.name}}</strong>
                             </div>
                             <p class="description">Here goes the description...</p>
@@ -88,7 +88,6 @@
         <script type="text/javascript" src="/bower_components/angular-gravatar/build/md5.js"></script>
         <script type="text/javascript" src="/bower_components/angular-gravatar/build/angular-gravatar.js"></script>
         <script type="text/javascript" src="/bower_components/angular-gridster/src/angular-gridster.js"></script>
-        <script type="text/javascript" src="/bower_components/angular-img-fallback/angular.dcb-img-fallback.min.js"></script>
 
         <script type="text/javascript">
             angular.module('wb', ['ui.gravatar', 'gridster', 'ngLodash']);

@@ -25,7 +25,6 @@
     "angular-gravatar": "~0.2.1",
     "fontawesome": "~4.1.0",
     "angular-gridster": "*",
-    "angular-img-fallback": "~0.0.2",
     "ng-lodash": "~0.0.2"
   }
 }
