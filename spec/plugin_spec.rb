@@ -7,11 +7,10 @@ require 'rufus-scheduler'
 describe Wallboard::Plugin do
 
     before do
-        @unit = Wallboard::Plugin.new(id: 'id-123', name: 'name-123')
+        @unit = Wallboard::Plugin.new(name: 'name-123')
     end
 
-    it 'is initialized by id and name' do
-        expect(@unit.id).to eq('id-123')
+    it 'is initialized by name' do
         expect(@unit.name).to eq('name-123')
     end
 
@@ -65,13 +64,13 @@ describe Wallboard::Plugin do
             end
         end
 
-        TestPlugin.new(id: 'id-123', name: 'name-123', mock: mock)
+        TestPlugin.new(name: 'name-123', mock: mock)
     end
 
     it 'can be serialized to json' do
         @unit.config = {'key1'=>'value1','key2'=>'value2'}
         @unit.layout = {'x' => 0, 'y' => 0, 'w' => 0, 'h' => 0}
-        expect(@unit.to_json).to eq("{\"_type\":\"Wallboard::Plugin\",\"config\":{\"key1\":\"value1\",\"key2\":\"value2\"},\"id\":\"id-123\",\"layout\":{\"x\":0,\"y\":0,\"w\":0,\"h\":0},\"name\":\"name-123\"}")
+        expect(@unit.to_json).to eq("{\"_type\":\"Wallboard::Plugin\",\"config\":{\"key1\":\"value1\",\"key2\":\"value2\"},\"id\":\"#{@unit.id}\",\"layout\":{\"x\":0,\"y\":0,\"w\":0,\"h\":0},\"name\":\"name-123\"}")
     end
 
     describe "Persistence" do
@@ -81,12 +80,12 @@ describe Wallboard::Plugin do
         end
 
         it "creates plugins in the database" do
-            plugin = Wallboard::Plugin.create(id: 'id-123', name: 'name-123')
+            plugin = Wallboard::Plugin.create(name: 'name-123')
             expect(Wallboard::Plugin.first(:id => plugin.id)).to eq(plugin)
         end
 
         it "saves plugins in the database" do
-            plugin = Wallboard::Plugin.new(id: 'id-123', name: 'name-123')
+            plugin = Wallboard::Plugin.new(name: 'name-123')
             plugin.save!
             expect(Wallboard::Plugin.first(:id => plugin.id)).to eq(plugin)
         end

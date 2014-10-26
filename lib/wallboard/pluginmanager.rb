@@ -1,5 +1,4 @@
 require 'pathname'
-require 'securerandom'
 require 'events'
 
 module Wallboard
@@ -33,7 +32,7 @@ module Wallboard
         def create(name)
             template = getTemplate(name) or not_found(name)
 
-            plugin = template[:class].split('::').inject(Object) {|o,c| o.const_get c}.create(id: SecureRandom.uuid, name: name)
+            plugin = template[:class].split('::').inject(Object) {|o,c| o.const_get c}.create(name: name)
             self.enabled << plugin
 
             plugin.on :message do |data|

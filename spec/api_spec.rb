@@ -56,7 +56,7 @@ describe Wallboard::API do
         describe "GET /plugin" do
             it "returns the plugins" do
                 expect(app.settings.pm).to receive(:enabled).and_return([
-                    Wallboard::Plugin.new(id: 'some_uuid', name: 'test-plugin')
+                    plugin = Wallboard::Plugin.new(name: 'test-plugin')
                 ])
                 expect(app.settings.pm).to receive(:available).and_return([
                     {"name"=>"builds", "class"=>"Builds::Main"},
@@ -68,7 +68,7 @@ describe Wallboard::API do
                 expect(plugins["available"]).to include({"name"=>"builds", "class"=>"Builds::Main"})
                 expect(plugins["available"]).to include({"name"=>"heroes", "class"=>"Wallboard::Plugin"})
                 expect(plugins["enabled"][0]).to include(
-                    "id" => "some_uuid",
+                    "id" => plugin.id,
                     "name" => 'test-plugin',
                     "config" => {},
                     "layout" => {}
@@ -78,11 +78,11 @@ describe Wallboard::API do
 
         describe "POST /plugin" do
             it "creates plugins" do
-                expect(app.settings.pm).to receive(:create).with("whatever").and_return(Wallboard::Plugin.new(id: 'some_uuid', name: 'test-plugin'))
+                expect(app.settings.pm).to receive(:create).with("whatever").and_return(plugin = Wallboard::Plugin.new(name: 'test-plugin'))
                 post '/api/plugin', params = {:name => 'whatever'}
                 expect(last_response.headers['Content-Type']).to eq('application/json')
                 expect(JSON.parse(last_response.body)).to include(
-                    "id" => "some_uuid",
+                    "id" => plugin.id,
                     "name" => 'test-plugin',
                     "config" => {},
                     "layout" => {}
@@ -104,12 +104,12 @@ describe Wallboard::API do
 
         describe "POST /plugin/:id/config" do
            it 'stores config into the plugin' do
-               plu = Wallboard::Plugin.new(id: 'some_uuid', name: 'test-plugin')
-               expect(app.settings.pm).to receive(:get).with("some_uuid").and_return(plu)
-               post '/api/plugin/some_uuid/config', {'key1'=>'value1', 'key2' => 'value2'}.to_json, { 'CONTENT_TYPE' => 'application/json'}
-               expect(plu.config['key1']).to eq('value1')
-               expect(plu.config['key2']).to eq('value2')
-               expect(last_response.body).to eq(plu.config.to_json)
+               plugin = Wallboard::Plugin.new(name: 'test-plugin')
+               expect(app.settings.pm).to receive(:enabled).and_return([plugin])
+               post "/api/plugin/#{plugin.id}/config", {'key1'=>'value1', 'key2' => 'value2'}.to_json, { 'CONTENT_TYPE' => 'application/json'}
+               expect(plugin.config['key1']).to eq('value1')
+               expect(plugin.config['key2']).to eq('value2')
+               expect(last_response.body).to eq(plugin.config.to_json)
             end
 
             it "returns an error if we try to modify a non enabled plugin" do

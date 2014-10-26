@@ -1,6 +1,7 @@
 require "events"
 require 'rufus-scheduler'
 require 'mongo_mapper'
+require 'securerandom'
 
 module Wallboard
     class Plugin
@@ -20,6 +21,7 @@ module Wallboard
 
         def initialize(*args)
             super
+            self.id = SecureRandom.uuid
             schedule(Rufus::Scheduler.singleton)
         end
 

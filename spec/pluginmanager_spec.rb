@@ -94,7 +94,7 @@ describe Wallboard::PluginManager do
     end
 
     it "broadcasts plugin messages" do
-        expect(Wallboard::Plugin).to receive(:all).and_return([plugin1 = Wallboard::Plugin.new(id: 'plugin1')])
+        expect(Wallboard::Plugin).to receive(:all).and_return([plugin1 = Wallboard::Plugin.new])
 
         plugin2 = @pm.create 'plugin2'
 
