@@ -9,7 +9,7 @@ module Wallboard
              'test' => {'uri' => 'mongodb://localhost:27017/wb-test'},
              'development' => {'uri' => 'mongodb://localhost:27017/wb-dev'},
              'production' => {'uri' => ENV['MONGODB_URI']}
-         }, 'development')
+         }, ENV['RACK_ENV'])
 
         include MongoMapper::Document
         include Events::Emitter
