@@ -11,6 +11,7 @@ describe Wallboard::WSHandler do
     end
 
     before do
+        allow(Wallboard::Plugin).to receive(:all).and_return([])
         allow_any_instance_of(Wallboard::Plugin).to receive(:save).and_return(true)
         @pm = Wallboard::PluginManager.new(File.join(Dir.pwd, 'spec/plugins'))
         @plugin = @pm.create 'plugin1'

@@ -1,3 +1,5 @@
+ENV['RACK_ENV'] = 'test'
+
 require 'wallboard/plugin'
 require 'rspec'
 require 'rufus-scheduler'
@@ -14,6 +16,7 @@ describe Wallboard::Plugin do
     end
 
     it "stores the config as a map" do
+        expect(@unit).to receive(:save).and_return(true)
         @unit.config = {'key1'=>'value1','key2'=>'value2'}
         expect(@unit.config['key1']).to eq('value1')
         expect(@unit.config['key2']).to eq('value2')
@@ -21,6 +24,7 @@ describe Wallboard::Plugin do
     end
 
     it "stores the layout as a map" do
+        expect(@unit).to receive(:save).and_return(true)
         @unit.layout = {'x' => 0, 'y' => 0, 'w' => 0, 'h' => 0}
         expect(@unit.layout['x']).to eq(0)
         expect(@unit.layout['y']).to eq(0)

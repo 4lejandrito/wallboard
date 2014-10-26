@@ -23,6 +23,16 @@ module Wallboard
             schedule(Rufus::Scheduler.singleton)
         end
 
+        def config=(config)
+            @config = config
+            save!
+        end
+
+        def layout=(layout)
+            @layout = layout
+            save!
+        end
+
         def publish(data)
             emit(:message, data)
             @data = data
