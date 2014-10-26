@@ -75,7 +75,7 @@ describe Wallboard::API do
         describe "POST /plugin" do
             it "creates plugins" do
                 expect(app.settings.pm).to receive(:create).with("whatever").and_return(Wallboard::Plugin.new('some_uuid', 'test-plugin'))
-                post '/api/plugin', {:name => 'whatever'}.to_json, { 'CONTENT_TYPE' => 'application/json'}
+                post '/api/plugin', params = {:name => 'whatever'}
                 expect(last_response.headers['Content-Type']).to eq('application/json')
                 expect(last_response.body).to eq({
                     "id" => "some_uuid",

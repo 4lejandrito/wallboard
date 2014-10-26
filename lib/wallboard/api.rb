@@ -71,7 +71,7 @@ module Wallboard
                 end
 
                 post do
-                    json settings.pm.create((JSON.parse request.body.read)['name'])
+                    json settings.pm.create(params[:name])
                 end
 
                 put do
