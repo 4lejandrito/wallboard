@@ -1,6 +1,5 @@
 require 'sinatra/base'
 require 'sinatra/json'
-require 'sinatra/activerecord'
 require 'sinatra/assetpack'
 require 'wallboard/pluginmanager'
 require 'wallboard/wshandler'
@@ -49,6 +48,7 @@ module Wallboard
                 send_file File.join(settings.plugins_folder, params[:plugin], 'public', params[:file])
             end
         end
+
 
         get "/" do
             erb :index

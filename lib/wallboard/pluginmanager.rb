@@ -6,12 +6,12 @@ module Wallboard
     class PluginManager
         include Events::Emitter
 
-        attr_accessor :enabled, :available
+        attr_reader :available, :enabled
 
         def initialize(folder)
             @folder = folder
-            Dir.glob(folder + "/*/plugin.rb").each{|f| require_relative f}
-            self.available = Dir.glob(@folder + '/*').map do |f|
+            Dir.glob(@folder + "/*/plugin.rb").each{|f| require_relative f}
+            @available = Dir.glob(@folder + '/*').map do |f|
                 name = Pathname.new(f).basename.to_s
                 clazz = Plugin.name
                 begin
@@ -20,13 +20,16 @@ module Wallboard
                 end
                 {:name => name, :class => clazz}
             end
-            self.enabled = []
+        end
+
+        def enabled
+            @enabled ||= Wallboard::Plugin.all
         end
 
         def create(name)
             template = getTemplate(name) or not_found(name)
 
-            plugin = template[:class].split('::').inject(Object) {|o,c| o.const_get c}.new(SecureRandom.uuid, name)
+            plugin = template[:class].split('::').inject(Object) {|o,c| o.const_get c}.create(id: SecureRandom.uuid, name: name)
             self.enabled << plugin
 
             plugin.on :message do |data|
@@ -45,12 +48,17 @@ module Wallboard
         def delete(id)
             plugin = self.enabled.delete(self.get(id))
             emit(:message, self)
+            plugin.delete
             plugin
         end
 
         def update(plugins)
             plugins.each {|p| get(p['id']).layout = p['layout']}
             emit(:message, self)
+        end
+
+        def to_json(*args)
+            {:available => self.available, :enabled => self.enabled}.to_json
         end
 
         private

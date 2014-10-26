@@ -1,9 +1,12 @@
 require 'wallboard/pluginmanager'
+require 'wallboard/plugin'
 require 'rspec'
 
 describe Wallboard::PluginManager do
 
     before do
+        allow_any_instance_of(Wallboard::Plugin).to receive(:save).and_return(true)
+        allow(Wallboard::Plugin).to receive(:all).and_return(enabledPlugins = [])
         @pm = Wallboard::PluginManager.new(File.join(Dir.pwd, 'spec/plugins'))
     end
 
@@ -12,7 +15,15 @@ describe Wallboard::PluginManager do
         expect(@pm.available).to include({:name => 'plugin2', :class => 'Wallboard::Plugin'})
     end
 
-    it "creates an instance of an available plugin" do
+    it "loads the enabled plugins only the first time" do
+        expect(Wallboard::Plugin).to receive(:all).and_return(enabledPlugins = [])
+
+        expect(@pm.enabled).to be(enabledPlugins)
+        expect(@pm.enabled).to be(enabledPlugins)
+    end
+
+    it "creates an instance of an available plugin and save it" do
+        expect_any_instance_of(Wallboard::Plugin).to receive(:save).and_return(true)
         expect(@pm.enabled).to eq([])
         plugin = @pm.create 'plugin1'
         expect(plugin).to be_instance_of(Plugin1::Main)
@@ -42,6 +53,7 @@ describe Wallboard::PluginManager do
     it "can remove an enabled plugin by id and return it" do
         expect(@pm.enabled).to eq([])
         plugin = @pm.create 'plugin1'
+        expect(plugin).to receive(:delete).and_return(true)
         deletedPlugin = @pm.delete plugin.id
         expect(@pm.enabled.length).to eq(0)
         expect(deletedPlugin).to eq(plugin)
@@ -90,6 +102,6 @@ describe Wallboard::PluginManager do
             mock.callback(msg)
         end
 
-        plugin.send('something')
+        plugin.publish('something')
     end
 end

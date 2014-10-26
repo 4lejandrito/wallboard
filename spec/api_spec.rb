@@ -16,6 +16,8 @@ describe Wallboard::API do
         app.set :plugins_folder, File.join(Dir.pwd, 'spec/plugins')
         app.disable :raise_errors
         app.disable :show_exceptions
+
+        allow(app.settings.pm).to receive(:enabled).and_return([])
     end
 
     describe "GET /" do
@@ -53,36 +55,38 @@ describe Wallboard::API do
 
         describe "GET /plugin" do
             it "returns the plugins" do
-                app.settings.pm.enabled = [Wallboard::Plugin.new('some_uuid', 'test-plugin')]
-                app.settings.pm.available = [
+                expect(app.settings.pm).to receive(:enabled).and_return([
+                    Wallboard::Plugin.new(id: 'some_uuid', name: 'test-plugin')
+                ])
+                expect(app.settings.pm).to receive(:available).and_return([
                     {"name"=>"builds", "class"=>"Builds::Main"},
                     {"name"=>"heroes", "class"=>"Wallboard::Plugin"}
-                ]
+                ])
                 get '/api/plugin'
                 expect(last_response.headers['Content-Type']).to eq('application/json')
                 plugins = JSON.parse(last_response.body)
                 expect(plugins["available"]).to include({"name"=>"builds", "class"=>"Builds::Main"})
                 expect(plugins["available"]).to include({"name"=>"heroes", "class"=>"Wallboard::Plugin"})
-                expect(plugins["enabled"]).to eq([{
+                expect(plugins["enabled"][0]).to include(
                     "id" => "some_uuid",
                     "name" => 'test-plugin',
                     "config" => {},
                     "layout" => {}
-                }])
+                )
             end
         end
 
         describe "POST /plugin" do
             it "creates plugins" do
-                expect(app.settings.pm).to receive(:create).with("whatever").and_return(Wallboard::Plugin.new('some_uuid', 'test-plugin'))
+                expect(app.settings.pm).to receive(:create).with("whatever").and_return(Wallboard::Plugin.new(id: 'some_uuid', name: 'test-plugin'))
                 post '/api/plugin', params = {:name => 'whatever'}
                 expect(last_response.headers['Content-Type']).to eq('application/json')
-                expect(last_response.body).to eq({
+                expect(JSON.parse(last_response.body)).to include(
                     "id" => "some_uuid",
                     "name" => 'test-plugin',
                     "config" => {},
                     "layout" => {}
-                }.to_json)
+                )
             end
 
             it "returns an error if we try to create a non available plugin" do
@@ -100,7 +104,7 @@ describe Wallboard::API do
 
         describe "POST /plugin/:id/config" do
            it 'stores config into the plugin' do
-               plu = Wallboard::Plugin.new('some_uuid', 'test-plugin')
+               plu = Wallboard::Plugin.new(id: 'some_uuid', name: 'test-plugin')
                expect(app.settings.pm).to receive(:get).with("some_uuid").and_return(plu)
                post '/api/plugin/some_uuid/config', {'key1'=>'value1', 'key2' => 'value2'}.to_json, { 'CONTENT_TYPE' => 'application/json'}
                expect(plu.config['key1']).to eq('value1')
@@ -116,7 +120,7 @@ describe Wallboard::API do
 
         describe "GET /plugin/:id" do
             it "returns the result of the plugin get method" do
-                plu = Wallboard::Plugin.new('some_uuid', 'test-plugin')
+                plu = Wallboard::Plugin.new(id: 'some_uuid', name: 'test-plugin')
                 expect(app.settings.pm).to receive(:get).with("some_uuid").and_return(plu)
                 expect(plu).to receive(:get).and_return({:key => 'value'})
                 get '/api/plugin/some_uuid'
@@ -134,7 +138,7 @@ describe Wallboard::API do
 
         describe "POST /plugin/:id" do
            it 'sends a message to the plugin' do
-               plu = Wallboard::Plugin.new('some_uuid', 'test-plugin')
+               plu = Wallboard::Plugin.new(id: 'some_uuid', name: 'test-plugin')
                expect(app.settings.pm).to receive(:get).with("some_uuid").and_return(plu)
                expect(plu).to receive(:message).with({'key'=> 'value'}).and_return({'key1'=> 'value1'})
 
@@ -146,7 +150,7 @@ describe Wallboard::API do
 
         describe "DELETE /plugin/:id" do
            it 'deletes an enabled plugin' do
-               plu = Wallboard::Plugin.new('some_uuid', 'test-plugin')
+               plu = Wallboard::Plugin.new(id: 'some_uuid', name: 'test-plugin')
                expect(app.settings.pm).to receive(:delete).with("some_uuid").and_return(plu)
                delete '/api/plugin/some_uuid'
             end
