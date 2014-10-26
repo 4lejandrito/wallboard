@@ -1,6 +1,5 @@
 require "events"
 require 'rufus-scheduler'
-#require 'mongoid'
 require 'mongo_mapper'
 
 module Wallboard
@@ -12,17 +11,12 @@ module Wallboard
              'production' => {'uri' => ENV['MONGODB_URI']}
          }, 'development')
 
-        #include Mongoid::Document
         include MongoMapper::Document
         include Events::Emitter
 
         key :name, String
         key :config, Hash, default: {}
         key :layout, Hash, default: {}
-        #field :name, type: String
-        #field :id, as: :_id, type: String
-        #field :config, type: Hash, default: {}
-        #field :layout, type: Hash, default: {}
 
         def initialize(*args)
             super
