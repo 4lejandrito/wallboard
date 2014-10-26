@@ -94,14 +94,18 @@ describe Wallboard::PluginManager do
     end
 
     it "broadcasts plugin messages" do
-        plugin = @pm.create 'plugin1'
+        expect(Wallboard::Plugin).to receive(:all).and_return([plugin1 = Wallboard::Plugin.new(id: 'plugin1')])
 
-        expect(mock = double()).to receive(:callback).with({:plugin => plugin.id, :data => 'something'})
+        plugin2 = @pm.create 'plugin2'
+
+        expect(mock = double()).to receive(:callback).with({:plugin => plugin1.id, :data => 'something1'})
+        expect(mock).to receive(:callback).with({:plugin => plugin2.id, :data => 'something2'})
 
         @pm.on :message do |msg|
             mock.callback(msg)
         end
 
-        plugin.publish('something')
+        plugin1.publish('something1')
+        plugin2.publish('something2')
     end
 end

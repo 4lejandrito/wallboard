@@ -23,7 +23,11 @@ module Wallboard
         end
 
         def enabled
-            @enabled ||= Wallboard::Plugin.all
+            @enabled ||= Wallboard::Plugin.all.each do |plugin|
+                plugin.on :message do |data|
+                    emit(:message, {:plugin => plugin.id, :data => data})
+                end
+            end
         end
 
         def create(name)
