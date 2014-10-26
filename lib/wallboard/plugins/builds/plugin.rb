@@ -19,7 +19,7 @@ module Builds
         end
 
         def schedule(scheduler)
-            scheduler.every '1s' do
+            scheduler.every '10s' do
                 send get
             end
         end
