@@ -4,7 +4,8 @@ require 'sinatra/activerecord'
 require 'sinatra/assetpack'
 require 'wallboard/pluginmanager'
 require 'wallboard/wshandler'
-require "sinatra/namespace"
+require 'sinatra/namespace'
+require 'less';
 
 module Wallboard
     class API < Sinatra::Base
@@ -21,6 +22,8 @@ module Wallboard
 
         namespace "/assets" do
             assets do
+                Less.paths << File.join(File.dirname(__FILE__), '/public/css')
+
                 serve '/assets/plugins', :from => 'plugins'
                 serve '/assets/wallboard', :from => 'public'
 
@@ -28,7 +31,7 @@ module Wallboard
                     '/assets/wallboard/js/*.js'
                 ]
                 css :wallboard, [
-                    '/assets/wallboard/wb.css'
+                    '/assets/wallboard/css/wb.css'
                 ]
 
                 pm.available.each do |p|
@@ -36,7 +39,7 @@ module Wallboard
                         "/assets/plugins/#{p[:name]}/public/*.js"
                     ]
                     css p[:name].to_sym, [
-                        '/assets/wallboard/plugin.css',
+                        '/assets/wallboard/css/plugin.css',
                         "/assets/plugins/#{p[:name]}/public/*.css"
                     ]
                 end
