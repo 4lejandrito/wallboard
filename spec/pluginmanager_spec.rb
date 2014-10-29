@@ -25,7 +25,9 @@ describe Wallboard::PluginManager do
     it "creates an instance of an available plugin and save it" do
         expect_any_instance_of(Wallboard::Plugin).to receive(:save).and_return(true)
         expect(@pm.enabled).to eq([])
+
         plugin = @pm.create 'plugin1'
+
         expect(plugin).to be_instance_of(Plugin1::Main)
         expect(plugin.name).to eq('plugin1')
         expect(@pm.enabled.length).to eq(1)
@@ -34,13 +36,17 @@ describe Wallboard::PluginManager do
 
     it "gets a plugin by id" do
         expect(@pm.enabled).to eq([])
+
         plugin = @pm.create 'plugin1'
+
         expect(@pm.get(plugin.id)).to be(plugin)
     end
 
     it "gets a plugin by name" do
         expect(@pm.enabled).to eq([])
+
         plugin = @pm.create 'plugin1'
+
         expect(@pm.get('plugin1')).to be(plugin)
     end
 
@@ -54,7 +60,9 @@ describe Wallboard::PluginManager do
         expect(@pm.enabled).to eq([])
         plugin = @pm.create 'plugin1'
         expect(plugin).to receive(:delete).and_return(true)
+        
         deletedPlugin = @pm.delete plugin.id
+
         expect(@pm.enabled.length).to eq(0)
         expect(deletedPlugin).to eq(plugin)
     end
@@ -67,6 +75,7 @@ describe Wallboard::PluginManager do
           {'id' => plugin1.id, 'layout' => {'x'=>0, 'y' => 0, 'w' => 10, 'h' => 10}},
           {'id' => plugin2.id, 'layout' => {'x'=>10, 'y' => 10, 'w' => 0, 'h' => 0}}
       ]
+
       expect(@pm.enabled[0].layout).to eq({'x'=>0, 'y' => 0, 'w' => 10, 'h' => 10})
       expect(@pm.enabled[1].layout).to eq({'x'=>10, 'y' => 10, 'w' => 0, 'h' => 0})
     end

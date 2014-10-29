@@ -16,7 +16,9 @@ describe Wallboard::Plugin do
 
     it "stores the config as a map" do
         expect(@unit).to receive(:save).and_return(true)
+
         @unit.config = {'key1'=>'value1','key2'=>'value2'}
+
         expect(@unit.config['key1']).to eq('value1')
         expect(@unit.config['key2']).to eq('value2')
         expect(@unit.config['key3']).to eq(nil)
@@ -24,7 +26,9 @@ describe Wallboard::Plugin do
 
     it "stores the layout as a map" do
         expect(@unit).to receive(:save).and_return(true)
+
         @unit.layout = {'x' => 0, 'y' => 0, 'w' => 0, 'h' => 0}
+
         expect(@unit.layout['x']).to eq(0)
         expect(@unit.layout['y']).to eq(0)
         expect(@unit.layout['w']).to eq(0)
@@ -37,9 +41,11 @@ describe Wallboard::Plugin do
 
     it "can publish asynchronous messages" do
         expect(mock = double()).to receive(:callback).with('A message!!')
+
         @unit.on :message do |msg|
             mock.callback(msg)
         end
+
         @unit.publish('A message!!')
     end
 
@@ -51,7 +57,9 @@ describe Wallboard::Plugin do
 
     it "saves by default the last message received and returns it in get" do
         mock = double()
+
         @unit.message(mock)
+
         expect(@unit.get()).to eq(mock)
     end
 
@@ -70,7 +78,14 @@ describe Wallboard::Plugin do
     it 'can be serialized to json' do
         @unit.config = {'key1'=>'value1','key2'=>'value2'}
         @unit.layout = {'x' => 0, 'y' => 0, 'w' => 0, 'h' => 0}
-        expect(@unit.to_json).to eq("{\"_type\":\"Wallboard::Plugin\",\"config\":{\"key1\":\"value1\",\"key2\":\"value2\"},\"id\":\"#{@unit.id}\",\"layout\":{\"x\":0,\"y\":0,\"w\":0,\"h\":0},\"name\":\"name-123\"}")
+
+        expect(@unit.to_json).to eq({
+            :_type => "Wallboard::Plugin",
+            :config => {:key1 => "value1", :key2 => "value2"},
+            :id => @unit.id,
+            :layout => {:x => 0,:y => 0,:w => 0, :h => 0},
+            :name => "name-123"
+        }.to_json)
     end
 
     describe "Persistence" do
@@ -81,12 +96,15 @@ describe Wallboard::Plugin do
 
         it "creates plugins in the database" do
             plugin = Wallboard::Plugin.create(name: 'name-123')
+
             expect(Wallboard::Plugin.first(:id => plugin.id)).to eq(plugin)
         end
 
         it "saves plugins in the database" do
             plugin = Wallboard::Plugin.new(name: 'name-123')
+
             plugin.save!
+
             expect(Wallboard::Plugin.first(:id => plugin.id)).to eq(plugin)
         end
 
