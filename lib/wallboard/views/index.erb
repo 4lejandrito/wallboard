@@ -2,7 +2,6 @@
 <html>
     <head>
         <title>Wallboard</title>
-
         <link rel="stylesheet" href="/bower_components/foundation/css/normalize.css">
         <link rel="stylesheet" href="/bower_components/foundation/css/foundation.css">
         <link rel="stylesheet" href="/bower_components/fontawesome/css/font-awesome.min.css">
@@ -22,7 +21,7 @@
 
             <div class="wb-bootstrap" ng-show="plugins.enabled.length == 0">
                 <i class="fa fa-th"></i>
-                <h1>Welcome to <strong>Wallboard</strong></h1>
+                <h1><strong>Wallboard</strong></h1>
                 <h2>Scroll down to get started!</h2>
                 <i class="fa fa-angle-down"></i>
             </div>
@@ -45,10 +44,10 @@
                         </div>
 
                         <ul class="options">
-                            <li><a class="delete" ng-click="deletePlugin(plugin)"><i class="fa fa-trash-o"></i></a></li>
-                            <li><a><i class="fa fa-wrench"></i></a></li>
-                            <li><a href="/plugin/{{plugin.id}}" target="_blank"><i class="fa fa-expand"></i></a></li>
-                            <li><a class="move"><i class="fa fa-arrows"></i></a></li>
+                            <li><a title="Remove" class="delete" ng-click="deletePlugin(plugin)"><i class="fa fa-trash-o"></i></a></li>
+                            <li><a title="Configure"><i class="fa fa-wrench"></i></a></li>
+                            <li><a title="Open in a new tab" href="/plugin/{{plugin.id}}" target="_blank"><i class="fa fa-expand"></i></a></li>
+                            <li><a title="Drag to move" class="move"><i class="fa fa-arrows"></i></a></li>
                         </ul>
 
                         <div class="wb-w-settings" ng-show="!plugin.config">
@@ -65,20 +64,20 @@
                 <ul class="small-block-grid-2 medium-block-grid-3 large-block-grid-4">
                     <li ng-repeat="plugin in plugins.available">
                         <a href="" ng-click="addPlugin(plugin)">
-                            <div class="title">
+                            <h3 class="title">
                                 <img onerror='this.style.display = "none"' ng-src="/assets/plugins/{{plugin.name}}/image.png">
                                 <strong>{{plugin.name}}</strong>
-                            </div>
+                            </h3>
                             <p class="description">Here goes the description...</p>
                         </a>
                     </li>
                 </ul>
             </div>
-        </div>
 
-        <footer>
-            <h3><i class="fa fa-th"> </i> Wallboard</h3>
-        </footer>
+            <footer>
+                <h3><i class="fa fa-th"> </i> Wallboard</h3>
+            </footer>
+        </div>
 
         <script type="text/javascript" src="/bower_components/jquery/dist/jquery.js"></script>
         <script type="text/javascript" src="/bower_components/jquery-ui/jquery-ui.min.js"></script>
