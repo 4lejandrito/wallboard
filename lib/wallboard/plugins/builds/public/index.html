@@ -7,7 +7,7 @@
                 <a class="th" ng-repeat="author in job.authors"><img title="{{author.name}}" gravatar-src="author.email" gravatar-size="100"></a>
             </div>
 
-            <h5>{{job.commit}}</h5>
+            <h5><i class="fa fa-comment-o"></i> {{job.commit}}</h5>
         </div>
     </li>
     <li style="height: {{100 / rows}}%;" class="job" ng-show="data.length > elems">
