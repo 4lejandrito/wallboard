@@ -20,7 +20,7 @@ module Builds
 
         def schedule(scheduler)
             scheduler.every '10s' do
-                send get
+                publish get
             end
         end
     end
