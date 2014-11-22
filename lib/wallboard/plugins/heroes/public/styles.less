@@ -1,3 +1,13 @@
+.circle(@width: 50px) {
+    border-radius: 50%;
+    border: solid 2px white;
+    width: @width;
+    height: @width;
+    text-align: center;
+    line-height: @width - 1px;
+    font-size: @width / 2;
+}
+
 body {
 
     background: #19bc9c;
@@ -7,7 +17,7 @@ body {
     }
 
     h2 {
-        padding: 5px 20px;
+        font-size: 7vh;
         text-align: center;
     }
 
@@ -15,47 +25,34 @@ body {
         @max-width: 400px;
 
         margin: 0 auto;
-        max-width: @max-width;
         border: none;
         background: none;
         tr:nth-of-type(even) {
             background-color: transparent !important;
         }
         td {
-            margin: 5px 10px;
+            padding: 1vh;
 
             &:nth-child(1) {
                 text-align: right;
             }
 
             &:nth-child(2) {
-                font-size: 1.5rem;
+                font-size: 5vh;
                 @media (max-width: @max-width) {
                     display: none !important;
                 }
             }
 
             &:nth-child(3) strong {
-                font-size: 2.3rem;
-                border-radius: 50%;
-                border: solid 2px white;
-                width: 64px;
-                height: 64px;
+                .circle(10vh);
                 display: block;
                 background: #2c3e50;
-                text-align: center;
-                padding-top: 22px;
                 color: white;
             }
         }
-        .th {
-            margin: 0;
-            border-width: 2px;
-            border-radius: 50%;
-        }
         img {
-            width: 64px;
-            border-radius: 50%;
+            .circle(10vh);
         }
     }
 }
