@@ -10,10 +10,17 @@ body {
 
     .wb-loading {
         text-align: center;
-        top: 40%;
-        position: absolute;
+        top: 50%;
+        -webkit-transform: translateY(-50%);
+        -ms-transform: translateY(-50%);
+        transform: translateY(-50%);
+        position: relative;
         width: 100%;
-        font-size: 5vw;
+        @media (min-width: 900px) {
+            font-size: 6rem;
+        }
+        font-size: 2rem;
+        line-height: 150%;
         color: @wb-color-b;
     }
 
