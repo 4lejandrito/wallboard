@@ -5,12 +5,8 @@ html {
 }
 
 #wallboard {
-    position: fixed;
-    width: 100%;
-    z-index: 0;
-    top: 0;
-    bottom: 0;
-    overflow-y: auto;
+
+    min-height: 100%;
 
     .wb-bootstrap {
         text-align: center;
@@ -136,12 +132,9 @@ html {
 }
 
 #backpanel {
-    z-index: 90000;
-    position: relative;
-    top: 100%;
+
     padding: @wb-base-padding 2 * @wb-base-padding;
     background-color: @wb-color-c;
-    box-shadow: 0 -@wb-base-padding / 2 0 @wb-color-shadow;
 
     .available {
         h2 {
