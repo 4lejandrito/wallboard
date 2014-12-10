@@ -6,11 +6,12 @@ require 'securerandom'
 module Wallboard
     class Plugin
 
-         MongoMapper.setup({
-             'test' => {'uri' => 'mongodb://localhost:27017/wb-test'},
-             'development' => {'uri' => 'mongodb://localhost:27017/wb-dev'},
-             'production' => {'uri' => ENV['MONGODB_URI']}
-         }, ENV['RACK_ENV'])
+
+        MongoMapper.setup({
+            'test' => {'uri' => 'mongodb://wb:wb@ds061200.mongolab.com:61200/wb'},
+            'development' => {'uri' => 'mongodb://wb:wb@ds061200.mongolab.com:61200/wb'},
+            'production' => {'uri' => ENV['MONGODB_URI']}
+        }, ENV['RACK_ENV'])
 
         include MongoMapper::Document
         include Events::Emitter
