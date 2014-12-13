@@ -6,7 +6,6 @@ require 'securerandom'
 module Wallboard
     class Plugin
 
-
         MongoMapper.setup({
             'test' => {'uri' => 'mongodb://wb:wb@ds061200.mongolab.com:61200/wb'},
             'development' => {'uri' => 'mongodb://wb:wb@ds061200.mongolab.com:61200/wb'},
@@ -17,17 +16,20 @@ module Wallboard
         include Events::Emitter
 
         key :name, String
-        key :config, Hash, default: {}
+        key :settings, Hash, default: {}
         key :layout, Hash, default: {}
 
         def initialize(*args)
             super
             self.id = SecureRandom.uuid
+        end
+
+        def start
             schedule(Rufus::Scheduler.singleton)
         end
 
-        def config=(config)
-            @config = config
+        def settings=(settings)
+            @settings = settings
             save!
         end
 

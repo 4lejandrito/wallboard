@@ -86,7 +86,7 @@ describe Wallboard::API do
                 expect(plugins["enabled"][0]).to include(
                     "id" => plugin.id,
                     "name" => 'test-plugin',
-                    "config" => {},
+                    "settings" => {},
                     "layout" => {}
                 )
             end
@@ -104,7 +104,7 @@ describe Wallboard::API do
                 expect(JSON.parse(last_response.body)).to include(
                     "id" => plugin.id,
                     "name" => 'test-plugin',
-                    "config" => {},
+                    "settings" => {},
                     "layout" => {}
                 )
             end
@@ -132,22 +132,22 @@ describe Wallboard::API do
             end
         end
 
-        describe "POST /plugin/:id/config" do
-            it 'stores config into the plugin' do
+        describe "POST /plugin/:id/settings" do
+            it 'stores settings into the plugin' do
                 plugin = Wallboard::Plugin.new(name: 'test-plugin')
                 expect(@pm).to receive(:enabled).and_return([plugin])
 
-                post "/api/plugin/#{plugin.id}/config",
+                post "/api/plugin/#{plugin.id}/settings",
                      {'key1'=>'value1', 'key2' => 'value2'}.to_json,
                      { 'CONTENT_TYPE' => 'application/json'}
 
-                expect(plugin.config['key1']).to eq('value1')
-                expect(plugin.config['key2']).to eq('value2')
-                expect(last_response.body).to eq(plugin.config.to_json)
+                expect(plugin.settings['key1']).to eq('value1')
+                expect(plugin.settings['key2']).to eq('value2')
+                expect(last_response.body).to eq(plugin.settings.to_json)
             end
 
             it "returns an error if we try to modify a non enabled plugin" do
-                post '/api/plugin/whatever/config',
+                post '/api/plugin/whatever/settings',
                      {'key1'=>'value1', 'key2' => 'value2'}.to_json,
                      { 'CONTENT_TYPE' => 'application/json'}
 

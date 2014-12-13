@@ -14,14 +14,14 @@ describe Wallboard::Plugin do
         expect(@unit.name).to eq('name-123')
     end
 
-    it "stores the config as a map" do
+    it "stores the settings as a map" do
         expect(@unit).to receive(:save).and_return(true)
 
-        @unit.config = {'key1'=>'value1','key2'=>'value2'}
+        @unit.settings = {'key1'=>'value1','key2'=>'value2'}
 
-        expect(@unit.config['key1']).to eq('value1')
-        expect(@unit.config['key2']).to eq('value2')
-        expect(@unit.config['key3']).to eq(nil)
+        expect(@unit.settings['key1']).to eq('value1')
+        expect(@unit.settings['key2']).to eq('value2')
+        expect(@unit.settings['key3']).to eq(nil)
     end
 
     it "stores the layout as a map" do
@@ -72,19 +72,19 @@ describe Wallboard::Plugin do
             end
         end
 
-        TestPlugin.new(name: 'name-123', mock: mock)
+        TestPlugin.new(name: 'name-123', mock: mock).start
     end
 
     it 'can be serialized to json' do
-        @unit.config = {'key1'=>'value1','key2'=>'value2'}
+        @unit.settings = {'key1'=>'value1','key2'=>'value2'}
         @unit.layout = {'x' => 0, 'y' => 0, 'w' => 0, 'h' => 0}
 
         expect(@unit.to_json).to eq({
             :_type => "Wallboard::Plugin",
-            :config => {:key1 => "value1", :key2 => "value2"},
             :id => @unit.id,
             :layout => {:x => 0,:y => 0,:w => 0, :h => 0},
-            :name => "name-123"
+            :name => "name-123",
+            :settings => {:key1 => "value1", :key2 => "value2"}
         }.to_json)
     end
 

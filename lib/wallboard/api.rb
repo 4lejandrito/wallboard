@@ -58,6 +58,10 @@ module Wallboard
             erb :plugin, :locals => {:plugin => settings.pm.get(params[:id])}
         end
 
+        get "/plugin/:id/settings" do
+            erb :settings, :locals => {:plugin => settings.pm.get(params[:id])}
+        end
+
         namespace "/api" do
 
             get do
@@ -90,8 +94,8 @@ module Wallboard
                     json settings.pm.delete(params[:id])
                 end
 
-                post "/:id/config" do
-                    json settings.pm.get(params[:id]).config = (JSON.parse request.body.read)
+                post "/:id/settings" do
+                    json settings.pm.get(params[:id]).settings = (JSON.parse request.body.read)
                 end
             end
         end

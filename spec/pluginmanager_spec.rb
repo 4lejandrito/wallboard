@@ -34,6 +34,20 @@ describe Wallboard::PluginManager do
         expect(@pm.enabled[0]).to be(plugin)
     end
 
+    it "starts a plugin on creation" do
+        expect_any_instance_of(Wallboard::Plugin).to receive(:start)
+
+        plugin = @pm.create 'plugin1'
+    end
+
+    it "starts the plugins on retrieval" do
+        allow(Wallboard::Plugin).to receive(:all).and_return([plugin = Wallboard::Plugin.new])
+
+        expect(plugin).to receive(:start)
+
+        @pm.enabled
+    end
+
     it "gets a plugin by id" do
         expect(@pm.enabled).to eq([])
 
@@ -60,7 +74,7 @@ describe Wallboard::PluginManager do
         expect(@pm.enabled).to eq([])
         plugin = @pm.create 'plugin1'
         expect(plugin).to receive(:delete).and_return(true)
-        
+
         deletedPlugin = @pm.delete plugin.id
 
         expect(@pm.enabled.length).to eq(0)

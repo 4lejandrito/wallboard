@@ -26,6 +26,7 @@ module Wallboard
                 plugin.on :message do |data|
                     emit(:message, {:plugin => plugin.id, :data => data})
                 end
+                plugin.start
             end
         end
 
@@ -40,6 +41,8 @@ module Wallboard
             end
 
             emit(:message, self)
+
+            plugin.start
 
             plugin
         end
