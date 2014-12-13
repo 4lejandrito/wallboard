@@ -18,10 +18,10 @@
             <div><i class="fa fa-spin fa-circle-o-notch"></i> Loading <strong><%=plugin.name%></strong></div>
         </div>
 
-        <div id="content" ng-show="!loading && plugin.config" ng-include="'/assets/plugins/<%=plugin.name%>/index.html'">
+        <div id="content" ng-show="!loading && plugin.settings" ng-include="'/assets/plugins/<%=plugin.name%>/index.html'">
         </div>
 
-        <div class="wb-w-settings" ng-show="!plugin.config">
+        <div class="wb-w-settings" ng-show="!plugin.settings">
             <strong><%=plugin.name%></strong> plugin!<br><a href="settings"><i class="fa fa-cog"></i> Set up</a>
         </div>
 

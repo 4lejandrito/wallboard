@@ -35,22 +35,29 @@
                         size-x="plugin.layout.w"
                         size-y="plugin.layout.h">
 
-                        <iframe ng-show="!loading && plugin.config" class="wb-plugin"
+                        <iframe ng-show="!loading && plugin.settings" class="wb-plugin"
                              ng-src="{{'/plugin/' + plugin.id | trustAsResourceUrl}}">
                         </iframe>
 
-                        <div ng-show="!loading && plugin.config" class="wb-plugin-over">
+                        <div ng-show="!loading && plugin.settings" class="wb-plugin-over">
                         </div>
 
                         <ul class="options">
                             <li><a title="Remove" class="delete" ng-click="deletePlugin(plugin)"><i class="fa fa-trash-o"></i></a></li>
-                            <li><a title="Configure"><i class="fa fa-wrench"></i></a></li>
+                            <li><a title="settings" href="#" data-reveal-id="settings-modal-{{plugin.id}}"><i class="fa fa-wrench"></i></a></li>
                             <li><a title="Open in a new tab" href="/plugin/{{plugin.id}}" target="_blank"><i class="fa fa-expand"></i></a></li>
                             <li><a title="Drag to move" class="move"><i class="fa fa-arrows"></i></a></li>
                         </ul>
 
-                        <div class="wb-w-settings" ng-show="!plugin.config">
-                            <strong>{{plugin.name}}</strong> plugin!<br><a href="settings"><i class="fa fa-cog"></i> Set up</a>
+                        <div id="settings-modal-{{plugin.id}}" class="reveal-modal" data-reveal>
+                            <div id="content" ng-controller="settings" ng-include="'/assets/plugins/' + plugin.name + '/settings.html'"></div>
+                        </div>
+
+                        <div class="wb-w-settings" ng-show="!plugin.settings">
+                            <strong>{{plugin.name}}</strong>
+                            <a href="#" data-reveal-id="settings-modal-{{plugin.id}}">
+                                <i class="fa fa-cog"></i> Set up
+                            </a>
                         </div>
                     </li>
                 </ul>
@@ -80,6 +87,7 @@
 
         <script type="text/javascript" src="/bower_components/jquery/dist/jquery.js"></script>
         <script type="text/javascript" src="/bower_components/javascript-detect-element-resize/jquery.resize.js"></script>
+        <script type="text/javascript" src="/bower_components/foundation/js/foundation.min.js"></script>
         <script type="text/javascript" src="/bower_components/angular/angular.min.js"></script>
         <script type="text/javascript" src="/bower_components/ng-lodash/build/ng-lodash.min.js"></script>
         <script type="text/javascript" src="/bower_components/angular-gravatar/build/md5.js"></script>
@@ -88,6 +96,7 @@
 
         <script type="text/javascript">
             angular.module('wb', ['ui.gravatar', 'gridster', 'ngLodash']);
+            $(document).foundation();
         </script>
 
         <%= js :wallboard %>
