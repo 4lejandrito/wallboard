@@ -15,6 +15,7 @@ gem 'events'
 gem 'rufus-scheduler', '~> 3.0.9'
 gem 'mongo_mapper', '~> 0.13.0'
 gem 'bson_ext'
+gem 'rest-client'
 
 group :assets do
   gem 'therubyracer'

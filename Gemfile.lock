@@ -49,6 +49,7 @@ GEM
       commonjs (~> 0.2.7)
     libv8 (3.16.14.7)
     method_source (0.8.2)
+    mime-types (2.4.3)
     minitest (5.4.2)
     mongo (1.11.1)
       bson (= 1.11.1)
@@ -61,6 +62,7 @@ GEM
     multipart-post (2.0.0)
     net-http-persistent (2.9.4)
     net-http-pipeline (1.0.1)
+    netrc (0.10.1)
     plucky (0.6.6)
       mongo (~> 1.5)
     pry (0.9.12.6)
@@ -77,6 +79,9 @@ GEM
       rack (>= 1.0)
     rake (10.3.2)
     ref (1.0.5)
+    rest-client (1.7.2)
+      mime-types (>= 1.16, < 3.0)
+      netrc (~> 0.7)
     rspec (3.1.0)
       rspec-core (~> 3.1.0)
       rspec-expectations (~> 3.1.0)
@@ -146,6 +151,7 @@ DEPENDENCIES
   less
   mongo_mapper (~> 0.13.0)
   rake
+  rest-client
   rspec
   rufus-scheduler (~> 3.0.9)
   sinatra
